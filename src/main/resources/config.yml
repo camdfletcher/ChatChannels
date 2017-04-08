@@ -1,0 +1,66 @@
+##         CCCCCCCCCCCCChhhhhhh                                       tttt                 CCCCCCCCCCCCChhhhhhh                                                                                     lllllll
+##      CCC::::::::::::Ch:::::h                                    ttt:::t              CCC::::::::::::Ch:::::h                                                                                     l:::::l
+##    CC:::::::::::::::Ch:::::h                                    t:::::t            CC:::::::::::::::Ch:::::h                                                                                     l:::::l
+##   C:::::CCCCCCCC::::Ch:::::h                                    t:::::t           C:::::CCCCCCCC::::Ch:::::h                                                                                     l:::::l
+##  C:::::C       CCCCCC h::::h hhhhh         aaaaaaaaaaaaa  ttttttt:::::ttttttt    C:::::C       CCCCCC h::::h hhhhh         aaaaaaaaaaaaa  nnnn  nnnnnnnn    nnnn  nnnnnnnn        eeeeeeeeeeee    l::::l     ssssssssss
+## C:::::C               h::::hh:::::hhh      a::::::::::::a t:::::::::::::::::t   C:::::C               h::::hh:::::hhh      a::::::::::::a n:::nn::::::::nn  n:::nn::::::::nn    ee::::::::::::ee  l::::l   ss::::::::::s
+## C:::::C               h::::::::::::::hh    aaaaaaaaa:::::at:::::::::::::::::t   C:::::C               h::::::::::::::hh    aaaaaaaaa:::::an::::::::::::::nn n::::::::::::::nn  e::::::eeeee:::::eel::::l ss:::::::::::::s
+## C:::::C               h:::::::hhh::::::h            a::::atttttt:::::::tttttt   C:::::C               h:::::::hhh::::::h            a::::ann:::::::::::::::nnn:::::::::::::::ne::::::e     e:::::el::::l s::::::ssss:::::s
+## C:::::C               h::::::h   h::::::h    aaaaaaa:::::a      t:::::t         C:::::C               h::::::h   h::::::h    aaaaaaa:::::a  n:::::nnnn:::::n  n:::::nnnn:::::ne:::::::eeeee::::::el::::l  s:::::s  ssssss
+## C:::::C               h:::::h     h:::::h  aa::::::::::::a      t:::::t         C:::::C               h:::::h     h:::::h  aa::::::::::::a  n::::n    n::::n  n::::n    n::::ne:::::::::::::::::e l::::l    s::::::s
+## C:::::C               h:::::h     h:::::h a::::aaaa::::::a      t:::::t         C:::::C               h:::::h     h:::::h a::::aaaa::::::a  n::::n    n::::n  n::::n    n::::ne::::::eeeeeeeeeee  l::::l       s::::::s
+##  C:::::C       CCCCCC h:::::h     h:::::ha::::a    a:::::a      t:::::t    ttttttC:::::C       CCCCCC h:::::h     h:::::ha::::a    a:::::a  n::::n    n::::n  n::::n    n::::ne:::::::e           l::::l ssssss   s:::::s
+##   C:::::CCCCCCCC::::C h:::::h     h:::::ha::::a    a:::::a      t::::::tttt:::::t C:::::CCCCCCCC::::C h:::::h     h:::::ha::::a    a:::::a  n::::n    n::::n  n::::n    n::::ne::::::::e         l::::::ls:::::ssss::::::s
+##    CC:::::::::::::::C h:::::h     h:::::ha:::::aaaa::::::a      tt::::::::::::::t  CC:::::::::::::::C h:::::h     h:::::ha:::::aaaa::::::a  n::::n    n::::n  n::::n    n::::n e::::::::eeeeeeee l::::::ls::::::::::::::s
+##      CCC::::::::::::C h:::::h     h:::::h a::::::::::aa:::a       tt:::::::::::tt    CCC::::::::::::C h:::::h     h:::::h a::::::::::aa:::a n::::n    n::::n  n::::n    n::::n  ee:::::::::::::e l::::::l s:::::::::::ss
+##         CCCCCCCCCCCCC hhhhhhh     hhhhhhh  aaaaaaaaaa  aaaa         ttttttttttt         CCCCCCCCCCCCC hhhhhhh     hhhhhhh  aaaaaaaaaa  aaaa nnnnnn    nnnnnn  nnnnnn    nnnnnn    eeeeeeeeeeeeee llllllll  sssssssssss
+
+## WARNING: Edit this file with caution... All changes will be reflected in the plugin
+##          If the configuration file is breaking the plugin then delete the current file and a new one will generate
+
+chat-settings:
+  ## Acceptable placeholders include:
+  ## - (COLOR) >> The color specified in the player's focused channel configuration
+  ## - (IDENTIFIER) >> The identifier specified in the player's focused channel configuration (Usually a single character like "T", "G", etc...)
+  ## - (CHANNEL) >> The channel specified in the player's focused channel configuration (Usually the name of the channel. Ex: "Global", "Announcements", "Staff Chat", etc...)
+  ## - (PLAYER) >> The name of the person sending the message
+  ## - (MESSAGE) >> The message being sent when chatting
+  ## - (Feel free to request a placeholder via Spigot PM)
+  format: "&8[(COLOR)(IDENTIFIER)&8] (PLAYER)&7: (MESSAGE)"
+  ## Do you want the required permission node to be announced to the player when they attempt to chat in a certain channel and receives the "no permission" message?
+  announce-permissions: false
+  ## Do you want all chat messages to be output in console?
+  log-messages: true
+channels:
+  global:
+    name: "Global"
+    description: "The default chat channel all players enter when joining the server"
+    identifier: "G"
+    ## Refer to [https://wiki.ess3.net/mc/] when filling this in (Ex: "WHITE", "LIGHT_PURPLE", "RED")
+    color: "&f"
+    ## The color of the ingame chat messages
+    chat-color: "&7"
+    ## Cooldown unit measured in seconds
+    cooldown: 3.0
+    ## Asterisk in this field will allow all players to chat in this channel
+    permission: "*"
+    ## Do you want players to automatically view this chat when they join the server?
+    automatically-view: true
+    ## Do you want players to automatically be chatting in this channel when they join the server?
+    automatically-focus: true
+  announcements:
+      name: "Announcements"
+      description: "The staff announcement channel"
+      identifier: "ANNOUNCEMENTS"
+      ## Refer to [https://wiki.ess3.net/mc/] when filling this in (Ex: "&f", "&d&l", "&c")
+      color: "&c"
+      ## The color of the ingame chat messages
+      chat-color: "&c&o"
+      ## Cooldown unit measured in seconds
+      cooldown: 0.0
+      ## Permissions can be any value that you desire!
+      permission: "example-channel-permission.speak"
+      ## Do you want players to automatically view this chat when they join the server?
+      automatically-view: true
+      ## Do you want players to automatically be chatting in this channel when they join the server?
+      automatically-focus: false

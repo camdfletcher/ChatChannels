@@ -1,0 +1,11 @@
+name: ChatChannels
+version: ${project.version}
+main: com.codenameflip.chatchannels.ChatChannels
+authors: [codenameflip]
+commands:
+  chat:
+    description: The basic chat command
+    aliases: [c]
+  chatAdmin:
+    description: The basic chat admin command
+    aliases: [ca, cadmin]
