@@ -8,7 +8,7 @@ Chats tend to get pretty messy, especially on servers with large quantities of p
 Servers which have an open-ended survival aspect may find this plugin more useful, for things like auctioning/trading, KOTH chats, public server events, staff chats, etc...
 
 ## Setup
-1. Download the plugin jar from the [Spigot Page](http://coming.soon)
+1. Download the plugin jar from the [Spigot Page](https://www.spigotmc.org/resources/chatchannels.39100/)
 2. Drag and drop the file in your `plugins` folder
 3. Configure the plugin to your specific needs
 4. **Voilà**, it's that simple.
