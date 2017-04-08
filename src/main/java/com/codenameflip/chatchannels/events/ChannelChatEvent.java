@@ -19,6 +19,12 @@ public class ChannelChatEvent extends Event implements Cancellable {
     private Channel targetChannel;
     private String message;
 
+    /**
+     * This event gets called whenever a player has composed a message and has clicked enter (thus sending the message). You may cancel this even and the message will not be sent to the channel
+     * @param sender The player sending the message
+     * @param targetChannel The channel the sender is currently focused on
+     * @param message The message the player has sent
+     */
     public ChannelChatEvent(Player sender, Channel targetChannel, String message) {
         this.sender = sender;
         this.targetChannel = targetChannel;

@@ -106,6 +106,11 @@ public final class ChatChannels extends JavaPlugin {
         return channels;
     }
 
+    /**
+     * Gets a Channel object instance via name
+     * @param name The name of the channel you would like to get
+     * @return The instance of the stored Channel (if it exists)
+     */
     public Channel getChannel(String name) {
         return getChannels().stream()
                 .filter(entries -> entries.getName().equalsIgnoreCase(name))
@@ -113,6 +118,11 @@ public final class ChatChannels extends JavaPlugin {
                 .orElse(null);
     }
 
+    /**
+     * Gets the channel a player is currently focused on
+     * @param player The player who's focused channel you would like to get
+     * @return The channel the player is currently focused on (if exists)
+     */
     public Channel getFocusedChannel(Player player) {
         return getChannels().stream()
                 .filter(entries -> entries.isFocused(player))
@@ -120,16 +130,29 @@ public final class ChatChannels extends JavaPlugin {
                 .orElse(null);
     }
 
+    /**
+     * Gets a list of all channels a player is currently viewing
+     * @param player The player who's viewing channels you would like to get
+     * @return An array of Channel objects which have stored the player as viewing
+     */
     public List<Channel> getViewingChannels(Player player) {
         return getChannels().stream()
                 .filter(entries -> entries.isViewing(player))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the default focus channel specified in the configuration file
+     * @return The default focus channel
+     */
     public Channel getDefaultChannel() {
         return defaultFocusChannel;
     }
 
+    /**
+     * Gets the array of Channels which players will automatically be forced to see when they join the server (specified in the configuration file)
+     * @return The list of Channels
+     */
     public Set<Channel> getDefaultViewingChannels() {
         return defaultViewingChannels;
     }

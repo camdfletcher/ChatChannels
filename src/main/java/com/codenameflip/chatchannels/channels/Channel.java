@@ -110,6 +110,10 @@ public class Channel {
         return focused.contains(player.getUniqueId());
     }
 
+    /**
+     * Forces a player to "focus" or begin talking in this channel
+     * @param player The player who you would like to focus to this channel
+     */
     public void focus(Player player) {
         ChatChannels.get().getChannels().forEach(channel -> {
             if (channel.getFocused().contains(player.getUniqueId()))
@@ -121,6 +125,10 @@ public class Channel {
         player.sendMessage(ChatColor.AQUA + "Set your chat focus to " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
     }
 
+    /**
+     * Forces a player to view this channel
+     * @param player The player who you would like to view this channel
+     */
     public void display(Player player) {
         if (!viewing.contains(player.getUniqueId())) {
             viewing.add(player.getUniqueId());
@@ -129,6 +137,10 @@ public class Channel {
         }
     }
 
+    /**
+     * Forces a player to hide this channel
+     * @param player The player who you would like to hide this channel from
+     */
     public void hide(Player player) {
         if (viewing.contains(player.getUniqueId())) {
             viewing.remove(player.getUniqueId());
@@ -137,6 +149,11 @@ public class Channel {
         }
     }
 
+    /**
+     * Utility method
+     * Toggles a player's view of this channel, either on or off.
+     * @param player The player who's view you would like to toggle
+     */
     public void toggleView(Player player) {
         if (isViewing(player))
             hide(player);
