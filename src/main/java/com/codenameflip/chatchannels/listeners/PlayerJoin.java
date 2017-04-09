@@ -1,10 +1,13 @@
 package com.codenameflip.chatchannels.listeners;
 
 import com.codenameflip.chatchannels.ChatChannels;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.stream.Stream;
 
 /**
  * @author codenameflip
@@ -23,6 +26,24 @@ public class PlayerJoin implements Listener {
 
         if (ChatChannels.get().getFocusedChannel(player) == null)
             ChatChannels.get().getDefaultChannel().focus(player);
+
+        if (player.hasPermission("chatchannels.update.notify")) {
+            Object[] update = ChatChannels.get().getUpdateHandler().getLatestUpdate();
+
+            if (update != null) {
+                String newVersion = (String) update[0];
+                String newChanges = (String) update[1];
+
+                final String TAG = ChatColor.RED + "[ChatChannels] ";
+
+                Stream.of(
+                        TAG + ChatColor.GOLD + "a " + ChatColor.BOLD + "new update " + ChatColor.GOLD + "has been released.",
+                        TAG + ChatColor.DARK_AQUA + "New Version " + ChatColor.WHITE+ newVersion,
+                        TAG + ChatColor.DARK_AQUA + "Your Version " + ChatColor.WHITE + ChatChannels.get().getDescription().getVersion(),
+                        TAG + ChatColor.DARK_AQUA + "Plugin Update(s) " + ChatColor.WHITE + newChanges
+                ).forEach(player::sendMessage);
+            }
+        }
     }
 
 }
