@@ -49,6 +49,7 @@ public final class ChatChannels extends JavaPlugin {
 
         updateHandler = new UpdateHandler("39100");
 
+        // If a reload happens, automatically focus/view default channels for players (prevents the need for relogging to review/focus)
         Bukkit.getOnlinePlayers().forEach(player -> {
             getDefaultViewingChannels().forEach(channel -> channel.display(player));
             getDefaultChannel().focus(player);
@@ -73,6 +74,7 @@ public final class ChatChannels extends JavaPlugin {
             boolean automaticFocus = getConfig().getBoolean("channels." + key + ".automatically-focus");
             boolean automaticView = getConfig().getBoolean("channels." + key + ".automatically-view");
             double cooldown = getConfig().getDouble("channels." + key + ".cooldown");
+            double chatRadius = getConfig().getDouble("channels." + key + ".chat-radius");
             String color = getConfig().getString("channels." + key + ".color");
             String chatColor = getConfig().getString("channels." + key + ".chat-color");
 
@@ -82,6 +84,7 @@ public final class ChatChannels extends JavaPlugin {
             incomingChannel.setColor(color);
             incomingChannel.setChatColor(chatColor);
             incomingChannel.setCooldown(cooldown);
+            incomingChannel.setChatRadius(chatRadius);
             incomingChannel.setFocusByDefault(automaticFocus);
             incomingChannel.setViewByDefault(automaticView);
 

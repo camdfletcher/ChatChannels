@@ -42,6 +42,8 @@ channels:
     chat-color: "&7"
     ## Cooldown unit measured in seconds
     cooldown: 3.0
+    ## How close do other players need to be to a person sending a message in order to view the sent message? (if this value is 0 then the radius will be infinite across the entire server)
+    chat-radius: 100.0
     ## Asterisk in this field will allow all players to chat in this channel
     permission: "*"
     ## Do you want players to automatically view this chat when they join the server?
@@ -58,6 +60,8 @@ channels:
       chat-color: "&c&o"
       ## Cooldown unit measured in seconds
       cooldown: 0.0
+      ## How close do other players need to be to a person sending a message in order to view the sent message? (if this value is 0 then the radius will be infinite across the entire server)
+      chat-radius: 0.0
       ## Permissions can be any value that you desire!
       permission: "example-channel-permission.speak"
       ## Do you want players to automatically view this chat when they join the server?

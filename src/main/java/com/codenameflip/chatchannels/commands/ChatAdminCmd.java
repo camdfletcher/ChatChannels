@@ -125,6 +125,8 @@ public class ChatAdminCmd implements CommandExecutor {
                         player.sendMessage(ChatColor.YELLOW + "Reloaded configuration file!");
                     }
                 }
+            } else {
+                player.sendMessage(ChatColor.RED + "You do not have permission to use the " + ChatColor.GOLD + "/chatAdmin " + ChatColor.RED + "command.");
             }
         }
 

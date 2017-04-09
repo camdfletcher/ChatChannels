@@ -101,6 +101,8 @@ public class ChatCmd implements CommandExecutor {
                         }
                     }
                 }
+            } else {
+                player.sendMessage(ChatColor.RED + "You do not have permission to use the " + ChatColor.GOLD + "/chat " + ChatColor.RED + "command.");
             }
         }
 

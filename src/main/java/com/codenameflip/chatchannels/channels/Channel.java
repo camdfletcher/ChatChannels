@@ -29,6 +29,7 @@ public class Channel {
     private String color = "§f";
     private String chatColor = "§7";
     private double cooldown = 0;
+    private double chatRadius = 0;
     private boolean viewByDefault = true;
     private boolean focusByDefault = true;
     private Set<UUID> viewing = new HashSet<>();
@@ -84,6 +85,14 @@ public class Channel {
 
     public void setCooldown(double cooldown) {
         this.cooldown = cooldown;
+    }
+
+    public double getChatRadius() {
+        return chatRadius;
+    }
+
+    public void setChatRadius(double chatRadius) {
+        this.chatRadius = chatRadius;
     }
 
     public boolean isViewByDefault() {
