@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -28,11 +29,17 @@ public class PlayerJoin implements Listener {
             ChatChannels.get().getDefaultChannel().focus(player);
 
         if (player.hasPermission("chatchannels.update.notify")) {
+            System.out.println("[ChatChannels] Checking for plugin update...");
             Object[] update = ChatChannels.get().getUpdateHandler().getLatestUpdate();
+
+            System.out.println("[ChatChannels] Update result = " + Arrays.toString(update));
 
             if (update != null) {
                 String newVersion = (String) update[0];
                 String newChanges = (String) update[1];
+
+                System.out.println("[ChatChannels] New version number: " + newVersion);
+                System.out.println("[ChatChannels] New version information: " + newChanges);
 
                 final String TAG = ChatColor.RED + "[ChatChannels] ";
 

@@ -68,7 +68,7 @@ public class ChatAdminCmd implements CommandExecutor {
 
                                 player.sendMessage(ChatColor.DARK_AQUA + "You have " + ChatColor.RED + ChatColor.BOLD + "MUTED" + ChatColor.DARK_AQUA + " the [" + targetChannel.getName() + "] channel.");
 
-                                System.out.println(" ** [CHAT LOG] (" + targetChannel.getName() + ") (!!!) Channel was muted by " + player.getName() + "(!!!)");
+                                System.out.println(" ** [CHAT LOG] (" + targetChannel.getName() + ") (!!!) Channel was muted by " + player.getName() + " g(!!!)");
                             }
 
                         } else {

@@ -21,10 +21,13 @@ public class UpdateHandler {
 
     public UpdateHandler(String resourceID) {
         this.resourceID = resourceID;
+
+        VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
+        DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
     }
 
-    private final String VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
-    private final String DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
+    private String VERSION_URL;
+    private String DESCRIPTION_URL;
 
     public String getResourceID() {
         return resourceID;
@@ -39,7 +42,13 @@ public class UpdateHandler {
             JSONArray versions = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(VERSION_URL))));
             String latestVersion = ((JSONObject) versions.get(versions.size() -1)).get("name").toString();
 
-            if (Integer.parseInt(latestVersion.replaceAll("\\.", "")) > Integer.parseInt(ChatChannels.get().getDescription().getVersion().replaceAll("\\.", ""))) {
+            int remoteVersionNumber = Integer.parseInt(latestVersion.replaceAll("\\D+", ""));
+            int localVersionNumber = Integer.parseInt(ChatChannels.get().getDescription().getVersion().replaceAll("\\D+", ""));
+
+            System.out.println("[ChatChannels] Checking for updates... Remote version number: " + remoteVersionNumber);
+            System.out.println("[ChatChannels] Checking for updates... Local version number: " + localVersionNumber);
+
+            if (remoteVersionNumber > localVersionNumber) {
                 JSONArray updates = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(DESCRIPTION_URL)));
                 String latestUpdate = ((JSONObject) updates.get(updates.size() - 1)).get("title").toString();
 
