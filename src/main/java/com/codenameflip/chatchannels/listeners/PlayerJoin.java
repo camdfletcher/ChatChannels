@@ -28,6 +28,7 @@ public class PlayerJoin implements Listener {
         if (ChatChannels.get().getFocusedChannel(player) == null)
             ChatChannels.get().getDefaultChannel().focus(player);
 
+        // Check to see if a new update has been cached
         if (player.hasPermission("chatchannels.update.notify")) {
             System.out.println("[ChatChannels] Checking for plugin update...");
             Object[] update = ChatChannels.get().getUpdateHandler().getLatestUpdate();

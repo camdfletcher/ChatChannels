@@ -96,6 +96,7 @@ public void onChat(ChannelChatEvent event) {
 ```
 
 ## Potential Feature List
+- ~~Auto update notifier~~
 - Per world channels
 - Chat channel radiuses
 - WorldGuard channel integration
