@@ -14,8 +14,14 @@ Please fill out the following form to the best of your ability, using as much de
 ***
   
 // Answer here
+
+### 3. Please list all plugins that you have running on the server currently `/plugins`
+![/plugins cmd example](http://image.prntscr.com/image/552c51e9cf114e208ba53a7c7c670089.png)
+***
+  
+// Answer here
  
-### 3. What are the steps taken to cause this issue?
+### 4. What are the steps taken to cause this issue?
 ***
   
 1. Step 1
@@ -23,12 +29,12 @@ Please fill out the following form to the best of your ability, using as much de
 3. Step 3
 4. Bug.
  
-### 4. What is the issue/bug you have found? _Be extremely descriptive_
+### 5. What is the issue/bug you have found? _Be extremely descriptive_
 ***
   
 // Answer here
   
-### 5. Has the plugin printed out any errors in console? _If so, please link/paste them below_
+### 6. Has the plugin printed out any errors in console? _If so, please link/paste them below_
 ***
   
 // Answer here
