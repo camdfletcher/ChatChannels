@@ -100,7 +100,9 @@ public void onChat(ChannelChatEvent event) {
 - ~~Auto update notifier~~  
   ![autoupdate screenshot](http://image.prntscr.com/image/440252d9f7c24751aca638bed4459ca5.png)
 - Per world channels
-- Chat channel radiuses
+- ~~Chat channel radiuses~~  
+  ![chat radius screenshot](http://image.prntscr.com/image/acd11e5bf88842c1a7ee0fc0d0c9f693.png)  
+  ![chat radius screenshot 2](http://image.prntscr.com/image/85c973df436146b8b8d951833ea3ebe6.png)
 - WorldGuard channel integration
 - Channel spam protection
 - Permission-based chat cooldowns
