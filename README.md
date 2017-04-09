@@ -19,6 +19,7 @@ Channel configurations allow for custom permissions, selected at your discretion
 - `chatchannels.cmd.chat` Gives players permission to use `/chat` (to focus, hide, and show channels)
 - `chatchannels.cmd.chatadmin` Gives staff permission to use `/chatAdmin` (to clear, mute and see channel data)
 - `chatchannels.bypass-mute` Gives players/staff permission to bypass channel mutes
+- `chatchannels.update.notify` When a player logs in with this permission they will be notified of updates
 
 _(Aliases for all commands are indicated by the **bold** highlighting in the command usage, ex: "f", "s", "h")_
 
