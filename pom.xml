@@ -6,7 +6,7 @@
 
     <groupId>com.codenameflip</groupId>
     <artifactId>ChatChannels</artifactId>
-    <version>1.0.0-SPIGOT-RELEASE</version>
+    <version>1.0.1-SPIGOT-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>ChatChannels</name>
