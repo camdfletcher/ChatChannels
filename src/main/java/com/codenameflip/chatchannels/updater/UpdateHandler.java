@@ -22,8 +22,8 @@ public class UpdateHandler {
     public UpdateHandler(String resourceID) {
         this.resourceID = resourceID;
 
-        VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
-        DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=SpigetDocs";
+        VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+        DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
     }
 
     private String VERSION_URL;
