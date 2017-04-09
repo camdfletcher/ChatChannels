@@ -6,6 +6,7 @@ import com.codenameflip.chatchannels.commands.ChatCmd;
 import com.codenameflip.chatchannels.listeners.ChannelChat;
 import com.codenameflip.chatchannels.listeners.PlayerChat;
 import com.codenameflip.chatchannels.listeners.PlayerJoin;
+import com.codenameflip.chatchannels.updater.UpdateHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -26,6 +27,8 @@ public final class ChatChannels extends JavaPlugin {
     private Set<Channel> defaultViewingChannels = new HashSet<>();
     private Channel defaultFocusChannel = null;
 
+    private UpdateHandler updateHandler;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -43,6 +46,8 @@ public final class ChatChannels extends JavaPlugin {
 
         getCommand("chat").setExecutor(new ChatCmd());
         getCommand("chatAdmin").setExecutor(new ChatAdminCmd());
+
+        updateHandler = new UpdateHandler("39100");
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             getDefaultViewingChannels().forEach(channel -> channel.display(player));
@@ -155,5 +160,13 @@ public final class ChatChannels extends JavaPlugin {
      */
     public Set<Channel> getDefaultViewingChannels() {
         return defaultViewingChannels;
+    }
+
+    /**
+     * Gets the UpdateHandler instance for the plugin
+     * @return UpdateHandler instance
+     */
+    public UpdateHandler getUpdateHandler() {
+        return updateHandler;
     }
 }
