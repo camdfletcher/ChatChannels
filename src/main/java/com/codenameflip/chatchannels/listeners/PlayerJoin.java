@@ -26,7 +26,7 @@ public class PlayerJoin implements Listener {
             ChatChannels.get().getDefaultViewingChannels().forEach(channel ->
                     channel.display(
                             player,
-                            ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-viewing-message-on-join")
+                            !(ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-viewing-message-on-join"))
                     )
             );
         }
@@ -34,7 +34,7 @@ public class PlayerJoin implements Listener {
         if (ChatChannels.get().getFocusedChannel(player) == null) {
             ChatChannels.get().getDefaultChannel().focus(
                     player,
-                    ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-focus-message-on-join")
+                    !(ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-focus-message-on-join"))
             );
         }
 
