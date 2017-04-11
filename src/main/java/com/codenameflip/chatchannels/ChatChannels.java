@@ -61,6 +61,10 @@ public final class ChatChannels extends JavaPlugin {
 
     }
 
+    public boolean isPlaceholderApiInstalled() {
+        return getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+    }
+
     private void registerChannels() {
         ConfigurationSection channelsList = getConfig().getConfigurationSection("channels");
 
