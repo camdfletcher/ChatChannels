@@ -22,11 +22,21 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         // If a player has newly logged in, automatically focus to the default channel and force them to view the default channels
-        if (ChatChannels.get().getViewingChannels(player).size() == 0)
-            ChatChannels.get().getDefaultViewingChannels().forEach(channel -> channel.display(player));
+        if (ChatChannels.get().getViewingChannels(player).size() == 0) {
+            ChatChannels.get().getDefaultViewingChannels().forEach(channel ->
+                    channel.display(
+                            player,
+                            ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-viewing-message-on-join")
+                    )
+            );
+        }
 
-        if (ChatChannels.get().getFocusedChannel(player) == null)
-            ChatChannels.get().getDefaultChannel().focus(player);
+        if (ChatChannels.get().getFocusedChannel(player) == null) {
+            ChatChannels.get().getDefaultChannel().focus(
+                    player,
+                    ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-focus-message-on-join")
+            );
+        }
 
         // Check to see if a new update has been cached
         if (player.hasPermission("chatchannels.update.notify")) {
