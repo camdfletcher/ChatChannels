@@ -124,6 +124,15 @@ public class Channel {
      * @param player The player who you would like to focus to this channel
      */
     public void focus(Player player) {
+        focus(player, true);
+    }
+
+    /**
+     * Forces a player to "focus" or begin talking in this channel
+     * @param player The player who you would like to focus to this channel
+     * @param notify Whether or not to notify the player of this change
+     */
+    public void focus(Player player, boolean notify) {
         ChatChannels.get().getChannels().forEach(channel -> {
             if (channel.getFocused().contains(player.getUniqueId()))
                 channel.getFocused().remove(player.getUniqueId());
@@ -131,7 +140,9 @@ public class Channel {
 
         focused.add(player.getUniqueId());
 
-        player.sendMessage(ChatColor.AQUA + "Set your chat focus to " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
+        if (notify) {
+            player.sendMessage(ChatColor.AQUA + "Set your chat focus to " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
+        }
     }
 
     /**
@@ -139,10 +150,21 @@ public class Channel {
      * @param player The player who you would like to view this channel
      */
     public void display(Player player) {
+        display(player, true);
+    }
+
+    /**
+     * Forces a player to view this channel
+     * @param player The player who you would like to view this channel
+     * @param notify Whether or not to notify the player of this change
+     */
+    public void display(Player player, boolean notify) {
         if (!viewing.contains(player.getUniqueId())) {
             viewing.add(player.getUniqueId());
 
-            player.sendMessage(ChatColor.GREEN + "You are now viewing " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
+            if (notify) {
+                player.sendMessage(ChatColor.GREEN + "You are now viewing " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
+            }
         }
     }
 

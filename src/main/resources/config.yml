@@ -31,6 +31,10 @@ chat-settings:
   announce-permissions: false
   ## Do you want all chat messages to be output in console?
   log-messages: true
+  ## Do you want to turn off viewing notification message on join?
+  squelch-viewing-message-on-join: true
+  ## Do you want to turn off focus notification message on join?
+  squelch-focus-message-on-join: true
 channels:
   global:
     name: "Global"
