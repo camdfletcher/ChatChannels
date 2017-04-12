@@ -3,6 +3,7 @@ package com.codenameflip.chatchannels.listeners;
 import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.channels.Channel;
 import com.codenameflip.chatchannels.events.ChannelChatEvent;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -145,6 +146,10 @@ public class PlayerChat implements Listener {
         base = base.replace("(CHANNEL)", channel.getName());
         base = base.replace("(PLAYER)", player.getDisplayName());
         base = base.replace("(MESSAGE)", channel.getChatColor() + message);
+
+        if (ChatChannels.get().isPlaceholderApiInstalled()) {
+            base = PlaceholderAPI.setPlaceholders(player, base);
+        }
 
         return base;
     }

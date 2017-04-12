@@ -2,6 +2,7 @@ name: ChatChannels
 version: ${project.version}
 main: com.codenameflip.chatchannels.ChatChannels
 authors: [codenameflip]
+softdepend: [PlaceholderAPI]
 commands:
   chat:
     description: The basic chat command
