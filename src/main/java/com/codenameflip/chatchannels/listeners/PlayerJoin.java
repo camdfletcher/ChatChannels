@@ -43,10 +43,11 @@ public class PlayerJoin implements Listener {
         // Check to see if a new update has been cached
         if (player.hasPermission("chatchannels.update.notify"))
         {
-            Object[] updateInformation = ChatChannels.get().getUpdateHandler().retrieveUpdateInformationIfAvailable();
 
-            if (updateInformation != null)
+            if (ChatChannels.get().getUpdateHandler().retrieveUpdateInformationIfAvailable().isPresent())
             {
+                Object[] updateInformation = ChatChannels.get().getUpdateHandler().retrieveUpdateInformationIfAvailable().get();
+
                 String updatedVersionNumber = (String) updateInformation[0];
                 String updatedVersionTitle = (String) updateInformation[1];
 

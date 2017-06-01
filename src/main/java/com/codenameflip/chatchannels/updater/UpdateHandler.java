@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 /**
  * @author codenameflip
@@ -18,27 +19,32 @@ import java.net.URL;
 public class UpdateHandler {
 
     private String resourceID;
-    private String VERSION_URL;
-    private String DESCRIPTION_URL;
 
     public UpdateHandler(String resourceID)
     {
         this.resourceID = resourceID;
-
-        VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
-        DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
     }
+
+
+    private final String updateTitle = ((JSONObject) getUpdates().get(getUpdates().size() - 1)).get("title").toString();
+    private final String updateVersionName = ((JSONObject) getVersions().get(getVersions().size() - 1)).get("name").toString();
+    private final String descriptionURL = "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+    private final String versionURL = "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
 
     public String getResourceID()
     {
         return resourceID;
     }
 
+    private String substituteResourceID(String baseURL) {
+        return baseURL.replaceAll("%ID%", resourceID);
+    }
+
     private JSONArray getVersions()
     {
         try
         {
-            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(VERSION_URL))));
+            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(substituteResourceID(versionURL)))));
         } catch (ParseException | IOException e)
         {
             e.printStackTrace();
@@ -54,7 +60,7 @@ public class UpdateHandler {
 
     private String getLatestVersionName()
     {
-        return ((JSONObject) getVersions().get(getVersions().size() - 1)).get("name").toString();
+        return updateVersionName;
     }
 
     private boolean isNewVersionAvailable()
@@ -66,7 +72,7 @@ public class UpdateHandler {
     {
         try
         {
-            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(DESCRIPTION_URL)));
+            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(substituteResourceID(descriptionURL))));
         } catch (ParseException | IOException e)
         {
             e.printStackTrace();
@@ -77,7 +83,7 @@ public class UpdateHandler {
 
     private String getLatestUpdateTitle()
     {
-        return ((JSONObject) getUpdates().get(getUpdates().size() - 1)).get("title").toString();
+        return updateTitle;
     }
 
     /**
@@ -85,12 +91,12 @@ public class UpdateHandler {
      *
      * @return The updated version number [0], and update title [1] of the resource update
      */
-    public Object[] retrieveUpdateInformationIfAvailable()
+    public Optional<Object[]> retrieveUpdateInformationIfAvailable()
     {
-        if (isNewVersionAvailable())
-            return new Object[]{getLatestVersionName(), getLatestUpdateTitle()};
+        if (this.isNewVersionAvailable())
+            return Optional.of(new Object[]{getLatestVersionName(), getLatestUpdateTitle()});
 
-        return null;
+        return Optional.empty();
     }
 
 }
