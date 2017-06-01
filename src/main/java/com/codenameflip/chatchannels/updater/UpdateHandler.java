@@ -28,8 +28,10 @@ public class UpdateHandler {
 
     private final String updateTitle = ((JSONObject) getUpdates().get(getUpdates().size() - 1)).get("title").toString();
     private final String updateVersionName = ((JSONObject) getVersions().get(getVersions().size() - 1)).get("name").toString();
-    private final String descriptionURL = "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
-    private final String versionURL = "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+    private final String descriptionURL =
+            "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+    private final String versionURL =
+            "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
 
     public String getResourceID()
     {
