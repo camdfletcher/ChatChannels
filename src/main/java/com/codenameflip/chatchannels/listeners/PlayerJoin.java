@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -18,11 +17,13 @@ import java.util.stream.Stream;
 public class PlayerJoin implements Listener {
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
         Player player = event.getPlayer();
 
         // If a player has newly logged in, automatically focus to the default channel and force them to view the default channels
-        if (ChatChannels.get().getViewingChannels(player).size() == 0) {
+        if (ChatChannels.get().getViewingChannels(player).size() == 0)
+        {
             ChatChannels.get().getDefaultViewingChannels().forEach(channel ->
                     channel.display(
                             player,
@@ -31,7 +32,8 @@ public class PlayerJoin implements Listener {
             );
         }
 
-        if (ChatChannels.get().getFocusedChannel(player) == null) {
+        if (ChatChannels.get().getFocusedChannel(player) == null)
+        {
             ChatChannels.get().getDefaultChannel().focus(
                     player,
                     !(ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-focus-message-on-join"))
@@ -39,26 +41,31 @@ public class PlayerJoin implements Listener {
         }
 
         // Check to see if a new update has been cached
-        if (player.hasPermission("chatchannels.update.notify")) {
-            System.out.println("[ChatChannels] Checking for plugin update...");
-            Object[] update = ChatChannels.get().getUpdateHandler().getLatestUpdate();
+        if (player.hasPermission("chatchannels.update.notify"))
+        {
+            Object[] updateInformation = ChatChannels.get().getUpdateHandler().retrieveUpdateInformationIfAvailable();
 
-            System.out.println("[ChatChannels] Update result = " + Arrays.toString(update));
-
-            if (update != null) {
-                String newVersion = (String) update[0];
-                String newChanges = (String) update[1];
-
-                System.out.println("[ChatChannels] New version number: " + newVersion);
-                System.out.println("[ChatChannels] New version information: " + newChanges);
-
-                final String TAG = ChatColor.RED + "[ChatChannels] ";
+            if (updateInformation != null)
+            {
+                String updatedVersionNumber = (String) updateInformation[0];
+                String updatedVersionTitle = (String) updateInformation[1];
 
                 Stream.of(
-                        TAG + ChatColor.GOLD + "a " + ChatColor.BOLD + "new update " + ChatColor.GOLD + "has been released.",
-                        TAG + ChatColor.DARK_AQUA + "New Version " + ChatColor.WHITE+ newVersion,
-                        TAG + ChatColor.DARK_AQUA + "Your Version " + ChatColor.WHITE + ChatChannels.get().getDescription().getVersion(),
-                        TAG + ChatColor.DARK_AQUA + "Plugin Update(s) " + ChatColor.WHITE + newChanges
+                        " ",
+                        " ******************************************** ",
+                        " **    New ChatChannels Plugin Update!     ** ",
+                        " ******************************************** ",
+                        " **    Version Number: " + updatedVersionNumber,
+                        " **    Change(s) in the new version: " + updatedVersionNumber,
+                        " ******************************************** ",
+                        " "
+                ).forEach(System.out::println);
+
+                Stream.of(
+                        "" + ChatColor.RED + "[ChatChannels] " + ChatColor.GOLD + "a " + ChatColor.BOLD + "new update " + ChatColor.GOLD + "has been released.",
+                        "" + ChatColor.RED + "[ChatChannels] " + ChatColor.DARK_AQUA + "New Version " + ChatColor.WHITE + updatedVersionNumber,
+                        "" + ChatColor.RED + "[ChatChannels] " + ChatColor.DARK_AQUA + "Your Version " + ChatColor.WHITE + ChatChannels.get().getDescription().getVersion(),
+                        "" + ChatColor.RED + "[ChatChannels] " + ChatColor.DARK_AQUA + "Plugin Update(s) " + ChatColor.WHITE + updatedVersionTitle
                 ).forEach(player::sendMessage);
             }
         }

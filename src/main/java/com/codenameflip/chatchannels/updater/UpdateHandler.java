@@ -18,47 +18,77 @@ import java.net.URL;
 public class UpdateHandler {
 
     private String resourceID;
+    private String VERSION_URL;
+    private String DESCRIPTION_URL;
 
-    public UpdateHandler(String resourceID) {
+    public UpdateHandler(String resourceID)
+    {
         this.resourceID = resourceID;
 
         VERSION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
         DESCRIPTION_URL = "https://api.spiget.org/v2/resources/" + resourceID + "/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
     }
 
-    private String VERSION_URL;
-    private String DESCRIPTION_URL;
-
-    public String getResourceID() {
+    public String getResourceID()
+    {
         return resourceID;
+    }
+
+    private JSONArray getVersions()
+    {
+        try
+        {
+            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(VERSION_URL))));
+        } catch (ParseException | IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private int getVersionNumber(String versionId)
+    {
+        return Integer.parseInt(versionId.replaceAll("\\D+", ""));
+    }
+
+    private String getLatestVersionName()
+    {
+        return ((JSONObject) getVersions().get(getVersions().size() - 1)).get("name").toString();
+    }
+
+    private boolean isNewVersionAvailable()
+    {
+        return getVersionNumber(getLatestVersionName()) > getVersionNumber(ChatChannels.get().getDescription().getVersion());
+    }
+
+    private JSONArray getUpdates()
+    {
+        try
+        {
+            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(DESCRIPTION_URL)));
+        } catch (ParseException | IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private String getLatestUpdateTitle()
+    {
+        return ((JSONObject) getUpdates().get(getUpdates().size() - 1)).get("title").toString();
     }
 
     /**
      * Queries the SpiGet servers and retrieves the latest release information (if current plugin version is outdated.)
+     *
      * @return The updated version number [0], and update title [1] of the resource update
      */
-    public Object[] getLatestUpdate() {
-        try {
-            JSONArray versions = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(VERSION_URL))));
-            String latestVersion = ((JSONObject) versions.get(versions.size() -1)).get("name").toString();
-
-            int remoteVersionNumber = Integer.parseInt(latestVersion.replaceAll("\\D+", ""));
-            int localVersionNumber = Integer.parseInt(ChatChannels.get().getDescription().getVersion().replaceAll("\\D+", ""));
-
-            System.out.println("[ChatChannels] Checking for updates... Remote version number: " + remoteVersionNumber);
-            System.out.println("[ChatChannels] Checking for updates... Local version number: " + localVersionNumber);
-
-            if (remoteVersionNumber > localVersionNumber) {
-                JSONArray updates = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(DESCRIPTION_URL)));
-                String latestUpdate = ((JSONObject) updates.get(updates.size() - 1)).get("title").toString();
-
-                return new Object[]{ latestVersion, latestUpdate };
-            } else
-                return null;
-
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
-        }
+    public Object[] retrieveUpdateInformationIfAvailable()
+    {
+        if (isNewVersionAvailable())
+            return new Object[]{getLatestVersionName(), getLatestUpdateTitle()};
 
         return null;
     }

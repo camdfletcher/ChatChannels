@@ -29,8 +29,14 @@ public final class ChatChannels extends JavaPlugin {
 
     private UpdateHandler updateHandler;
 
+    public static ChatChannels get()
+    {
+        return instance;
+    }
+
     @Override
-    public void onEnable() {
+    public void onEnable()
+    {
         instance = this;
 
         if (!(new File(getDataFolder(), "config.yml")).exists())
@@ -50,26 +56,31 @@ public final class ChatChannels extends JavaPlugin {
         updateHandler = new UpdateHandler("39100");
 
         // If a reload happens, automatically focus/view default channels for players (prevents the need for relogging to review/focus)
-        Bukkit.getOnlinePlayers().forEach(player -> {
+        Bukkit.getOnlinePlayers().forEach(player ->
+        {
             getDefaultViewingChannels().forEach(channel -> channel.display(player));
             getDefaultChannel().focus(player);
         });
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable()
+    {
 
     }
 
-    public boolean isPlaceholderApiInstalled() {
+    public boolean isPlaceholderApiInstalled()
+    {
         return getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
-    private void registerChannels() {
+    private void registerChannels()
+    {
         ConfigurationSection channelsList = getConfig().getConfigurationSection("channels");
 
-        for (String key : channelsList.getKeys(false)) {
-            System.out.println("Now loading '" + key + "'...");
+        for (String key : channelsList.getKeys(false))
+        {
+            System.out.println(" * Now loading '" + key + "'...");
 
             String name = getConfig().getString("channels." + key + ".name");
             String description = getConfig().getString("channels." + key + ".description");
@@ -93,37 +104,24 @@ public final class ChatChannels extends JavaPlugin {
             incomingChannel.setViewByDefault(automaticView);
 
             incomingChannel.register();
-
-            if (automaticFocus) {
-                defaultFocusChannel = incomingChannel;
-                System.out.println(" > Detected auto-focus channel");
-            }
-
-            if (automaticView) {
-                defaultViewingChannels.add(incomingChannel);
-                System.out.println(" > Detected auto-view channel");
-            }
-
-            System.out.println("** '" + name + "' channel registered.");
         }
 
         System.out.println(" *** All configuration channels registered!");
     }
 
-    public static ChatChannels get() {
-        return instance;
-    }
-
-    public Set<Channel> getChannels() {
+    public Set<Channel> getChannels()
+    {
         return channels;
     }
 
     /**
      * Gets a Channel object instance via name
+     *
      * @param name The name of the channel you would like to get
      * @return The instance of the stored Channel (if it exists)
      */
-    public Channel getChannel(String name) {
+    public Channel getChannel(String name)
+    {
         return getChannels().stream()
                 .filter(entries -> entries.getName().equalsIgnoreCase(name))
                 .findFirst()
@@ -132,10 +130,12 @@ public final class ChatChannels extends JavaPlugin {
 
     /**
      * Gets the channel a player is currently focused on
+     *
      * @param player The player who's focused channel you would like to get
      * @return The channel the player is currently focused on (if exists)
      */
-    public Channel getFocusedChannel(Player player) {
+    public Channel getFocusedChannel(Player player)
+    {
         return getChannels().stream()
                 .filter(entries -> entries.isFocused(player))
                 .findFirst()
@@ -144,10 +144,12 @@ public final class ChatChannels extends JavaPlugin {
 
     /**
      * Gets a list of all channels a player is currently viewing
+     *
      * @param player The player who's viewing channels you would like to get
      * @return An array of Channel objects which have stored the player as viewing
      */
-    public List<Channel> getViewingChannels(Player player) {
+    public List<Channel> getViewingChannels(Player player)
+    {
         return getChannels().stream()
                 .filter(entries -> entries.isViewing(player))
                 .collect(Collectors.toList());
@@ -155,25 +157,31 @@ public final class ChatChannels extends JavaPlugin {
 
     /**
      * Gets the default focus channel specified in the configuration file
+     *
      * @return The default focus channel
      */
-    public Channel getDefaultChannel() {
+    public Channel getDefaultChannel()
+    {
         return defaultFocusChannel;
     }
 
     /**
      * Gets the array of Channels which players will automatically be forced to see when they join the server (specified in the configuration file)
+     *
      * @return The list of Channels
      */
-    public Set<Channel> getDefaultViewingChannels() {
+    public Set<Channel> getDefaultViewingChannels()
+    {
         return defaultViewingChannels;
     }
 
     /**
      * Gets the UpdateHandler instance for the plugin
+     *
      * @return UpdateHandler instance
      */
-    public UpdateHandler getUpdateHandler() {
+    public UpdateHandler getUpdateHandler()
+    {
         return updateHandler;
     }
 }
