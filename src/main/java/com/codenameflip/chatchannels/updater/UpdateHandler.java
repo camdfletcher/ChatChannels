@@ -9,96 +9,173 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
-/**
- * @author codenameflip
- * @since 4/8/17
- */
+public final class UpdateHandler {
 
-public class UpdateHandler {
+	private static final String UPDATE_TITLE_NAME = "title";
+	private static final String UPDATE_NAME_NAME = "name";
+	private static final Pattern VERSION_STRIPPER = Pattern.compile("\\D+");
+	
+	public static Builder builder()
+	{
+		return new Builder();
+	}
+	
+	public static final class Builder implements org.apache.commons.lang3.builder.Builder<UpdateHandler>
+	{
+		
+		private String resourceId;
+		private String descriptionUrl;
+		private String versionUrl;
+		
+		Builder()
+		{
+			
+		}
+		
+		@Override
+		public UpdateHandler build()
+		{
+			Objects.requireNonNull(this.resourceId, "resourceId");
+			Objects.requireNonNull(this.descriptionUrl, "descriptionUrl");
+			Objects.requireNonNull(this.versionUrl, "versionUrl");
+			
+			return new UpdateHandler(this.resourceId, this.descriptionUrl, this.versionUrl);
+		}
+		
+		public Builder setResourceId(String resourceId)
+		{
+			this.resourceId = resourceId;
+			return this;
+		}
+		
+		public Builder setDescriptionUrl(String descriptionUrl)
+		{
+			this.descriptionUrl = descriptionUrl;
+			return this;
+		}
+		
+		public Builder setVersionUrl(String versionUrl)
+		{
+			this.versionUrl = versionUrl;
+			return this;
+		}
+		
+	}
+	
+	private final String resourceID;
+	private final String descriptionURL;
+	private final String versionURL;
+	
+	UpdateHandler(String resourceID, String descriptionURL, String versionURL)
+	{
+		this.resourceID = resourceID;
+		this.descriptionURL = descriptionURL;
+		this.versionURL = versionURL;
+	}
+	
+	public String getResourceID()
+	{
+		return this.resourceID;
+	}
+	
+	public String getDescriptionURL()
+	{
+		return this.descriptionURL;
+	}
+	
+	public String getVersionURL()
+	{
+		return this.versionURL;
+	}
 
-    private String resourceID;
+	private String substituteResourceID(String baseURL)
+	{
+		return baseURL.replaceAll("%ID%", this.resourceID);
+	}
 
-    public UpdateHandler(String resourceID)
-    {
-        this.resourceID = resourceID;
-    }
+	private JSONArray getVersions()
+	{
+		try
+		{
+			return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(substituteResourceID(versionURL)))));
+		}
+		catch (ParseException | IOException e)
+		{
+			e.printStackTrace();
+		}
 
+		return null;
+	}
 
-    private final String updateTitle = ((JSONObject) getUpdates().get(getUpdates().size() - 1)).get("title").toString();
-    private final String updateVersionName = ((JSONObject) getVersions().get(getVersions().size() - 1)).get("name").toString();
-    private final String descriptionURL =
-            "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
-    private final String versionURL =
-            "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+	private int getVersionNumber(String versionId)
+	{
+		return Integer.parseInt(versionId.replaceAll(UpdateHandler.VERSION_STRIPPER.pattern(), ""));
+	}
 
-    public String getResourceID()
-    {
-        return resourceID;
-    }
+	private String getLatestVersionName()
+	{
+		JSONArray versions = this.getVersions();
+		
+		if (versions == null)
+		{
+			return null;
+		}
+		
+		return ((JSONObject) versions.get(versions.size() - 1)).get(UpdateHandler.UPDATE_NAME_NAME).toString();
+	}
 
-    private String substituteResourceID(String baseURL) {
-        return baseURL.replaceAll("%ID%", resourceID);
-    }
+	private boolean isNewVersionAvailable()
+	{
+		return this.getVersionNumber(this.getLatestVersionName()) > this.getVersionNumber(ChatChannels.get().getDescription().getVersion());
+	}
 
-    private JSONArray getVersions()
-    {
-        try
-        {
-            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(substituteResourceID(versionURL)))));
-        } catch (ParseException | IOException e)
-        {
-            e.printStackTrace();
-        }
+	private JSONArray getUpdates()
+	{
+		try
+		{
+			return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(this.substituteResourceID(this.descriptionURL))));
+		}
+		catch (ParseException | IOException e)
+		{
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    private int getVersionNumber(String versionId)
-    {
-        return Integer.parseInt(versionId.replaceAll("\\D+", ""));
-    }
+	private String getLatestUpdateTitle()
+	{
+		JSONArray updates = this.getUpdates();
+		
+		if (updates == null)
+		{
+			return null;
+		}
+		
+		return ((JSONObject) updates.get(updates.size() - 1)).get(UpdateHandler.UPDATE_TITLE_NAME).toString();
+	}
 
-    private String getLatestVersionName()
-    {
-        return updateVersionName;
-    }
+	/**
+	 * Queries the SpiGet servers and retrieves the latest release information (if current plugin version is outdated.)
+	 *
+	 * @return The updated version number [0], and update title [1] of the resource update
+	 */
+	public Optional<Object[]> retrieveUpdateInformationIfAvailable()
+	{
+		if (this.isNewVersionAvailable())
+		{
+			return Optional.of(new Object[]
+					{
+							this.getLatestVersionName(),
+							this.getLatestUpdateTitle()
+					});
+		}
 
-    private boolean isNewVersionAvailable()
-    {
-        return getVersionNumber(getLatestVersionName()) > getVersionNumber(ChatChannels.get().getDescription().getVersion());
-    }
-
-    private JSONArray getUpdates()
-    {
-        try
-        {
-            return (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(substituteResourceID(descriptionURL))));
-        } catch (ParseException | IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private String getLatestUpdateTitle()
-    {
-        return updateTitle;
-    }
-
-    /**
-     * Queries the SpiGet servers and retrieves the latest release information (if current plugin version is outdated.)
-     *
-     * @return The updated version number [0], and update title [1] of the resource update
-     */
-    public Optional<Object[]> retrieveUpdateInformationIfAvailable()
-    {
-        if (this.isNewVersionAvailable())
-            return Optional.of(new Object[]{getLatestVersionName(), getLatestUpdateTitle()});
-
-        return Optional.empty();
-    }
+		return Optional.empty();
+	}
 
 }
