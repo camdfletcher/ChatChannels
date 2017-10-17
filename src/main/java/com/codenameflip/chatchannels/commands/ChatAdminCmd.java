@@ -23,12 +23,16 @@ public class ChatAdminCmd implements CommandExecutor {
     private Map<Channel, String> storedPermissionData = new HashMap<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (label.equalsIgnoreCase("chatAdmin") && sender instanceof Player) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
+        if (label.equalsIgnoreCase("chatAdmin") && sender instanceof Player)
+        {
             Player player = (Player) sender;
 
-            if (player.hasPermission("chatchannels.cmd.chatadmin")) {
-                if (args.length < 1) {
+            if (player.hasPermission("chatchannels.cmd.chatadmin"))
+            {
+                if (args.length < 1)
+                {
                     Stream.of(
                             "" + ChatColor.RED + ChatColor.BOLD + "Chat Commands " + ChatColor.WHITE + ChatColor.STRIKETHROUGH + "--" + ChatColor.RESET + " " + ChatColor.GRAY + "Enter a sub command...",
                             "" + ChatColor.RED + "/chatAdmin mute (channel)" + ChatColor.WHITE + " - " + ChatColor.GRAY + "Halts all communication in chat",
@@ -36,22 +40,28 @@ public class ChatAdminCmd implements CommandExecutor {
                             "" + ChatColor.RED + "/chatAdmin channelData" + ChatColor.WHITE + " - " + ChatColor.GRAY + "Dumps all channel data in chat",
                             "" + ChatColor.RED + "/chatAdmin reload" + ChatColor.WHITE + " - " + ChatColor.GRAY + "Reloads the ChatChannels config.yml"
                     ).forEach(player::sendMessage);
-                } else {
+                }
+                else
+                {
                     // Handle subcommands
 
-                    if (args[0].equalsIgnoreCase("mute")) {
-                        if (args.length == 2) {
+                    if (args[0].equalsIgnoreCase("mute"))
+                    {
+                        if (args.length == 2)
+                        {
 
                             Channel targetChannel = ChatChannels.get().getChannel(args[1]);
                             final String MUTE_PERMISSION = "chatchannels.bypass-mute";
 
-                            if (targetChannel == null) {
+                            if (targetChannel == null)
+                            {
                                 player.sendMessage(ChatColor.RED + "Invalid channel specified; did you spell it correctly?");
 
                                 return false;
                             }
 
-                            if (targetChannel.getPermission().equalsIgnoreCase(MUTE_PERMISSION)) {
+                            if (targetChannel.getPermission().equalsIgnoreCase(MUTE_PERMISSION))
+                            {
                                 // If the channel is already muted then reset the permission
 
                                 targetChannel.setPermission(storedPermissionData.get(targetChannel));
@@ -60,7 +70,9 @@ public class ChatAdminCmd implements CommandExecutor {
                                 player.sendMessage(ChatColor.DARK_AQUA + "You have " + ChatColor.RED + ChatColor.BOLD + "UNMUTED" + ChatColor.DARK_AQUA + " the [" + targetChannel.getName() + "] channel.");
 
                                 System.out.println(" ** [CHAT LOG] (" + targetChannel.getName() + ") (!!!) Channel was unmuted by " + player.getName() + "(!!!)");
-                            } else {
+                            }
+                            else
+                            {
                                 // If the channel is NOT muted, set the temp. permission
 
                                 storedPermissionData.put(targetChannel, targetChannel.getPermission());
@@ -71,15 +83,21 @@ public class ChatAdminCmd implements CommandExecutor {
                                 System.out.println(" ** [CHAT LOG] (" + targetChannel.getName() + ") (!!!) Channel was muted by " + player.getName() + " (!!!)");
                             }
 
-                        } else {
+                        }
+                        else
+                        {
                             player.sendMessage(ChatColor.RED + "Invalid command usage.");
                         }
-                    } else if (args[0].equalsIgnoreCase("clear")) {
-                        if (args.length == 2) {
+                    }
+                    else if (args[0].equalsIgnoreCase("clear"))
+                    {
+                        if (args.length == 2)
+                        {
 
                             Channel targetChannel = ChatChannels.get().getChannel(args[1]);
 
-                            if (targetChannel == null) {
+                            if (targetChannel == null)
+                            {
                                 player.sendMessage(ChatColor.RED + "Invalid channel specified; did you spell it correctly?");
 
                                 return false;
@@ -88,8 +106,10 @@ public class ChatAdminCmd implements CommandExecutor {
                             targetChannel.getViewing().forEach(uuid -> {
                                 Player viewer = Bukkit.getPlayer(uuid);
 
-                                if (viewer != null && viewer.isOnline()) {
-                                    for (int i = 0; i < 1000; i++) {
+                                if (viewer != null && viewer.isOnline())
+                                {
+                                    for (int i = 0; i < 1000; i++)
+                                    {
                                         viewer.sendMessage(" ");
                                     }
 
@@ -99,12 +119,17 @@ public class ChatAdminCmd implements CommandExecutor {
 
                             System.out.println(" ** [CHAT LOG] (" + targetChannel.getName() + ") (!!!) Channel was cleared by " + player.getName() + " (!!!)");
 
-                        } else {
+                        }
+                        else
+                        {
                             player.sendMessage(ChatColor.RED + "Invalid command usage.");
                         }
-                    } else if (args[0].equalsIgnoreCase("channelData")) {
+                    }
+                    else if (args[0].equalsIgnoreCase("channelData"))
+                    {
 
-                        for (Channel channel : ChatChannels.get().getChannels()) {
+                        for (Channel channel : ChatChannels.get().getChannels())
+                        {
                             Stream.of(
                                     "" + channel.getColor() + ChatColor.BOLD + channel.getName() + ChatColor.GRAY + " (" + channel.getDescription() + ")",
                                     "" + ChatColor.WHITE + "Identifier: " + ChatColor.GREEN + channel.getColor() + channel.getIdentifier(),
@@ -119,13 +144,17 @@ public class ChatAdminCmd implements CommandExecutor {
                         }
 
                         player.sendMessage(ChatColor.RED + "End of dump data.");
-                    } else if (args[0].equalsIgnoreCase("reload")) {
+                    }
+                    else if (args[0].equalsIgnoreCase("reload"))
+                    {
                         ChatChannels.get().reloadConfig();
 
                         player.sendMessage(ChatColor.YELLOW + "Reloaded configuration file!");
                     }
                 }
-            } else {
+            }
+            else
+            {
                 player.sendMessage(ChatColor.RED + "You do not have permission to use the " + ChatColor.GOLD + "/chatAdmin " + ChatColor.RED + "command.");
             }
         }

@@ -18,13 +18,6 @@ public class Channel {
     private String identifier;
     private String name;
     private String description;
-
-    public Channel(String identifier, String name, String description) {
-        this.identifier = identifier;
-        this.name = name;
-        this.description = description;
-    }
-
     private String permission = "*";
     private String color = "§f";
     private String chatColor = "§7";
@@ -34,105 +27,136 @@ public class Channel {
     private boolean focusByDefault = true;
     private Set<UUID> viewing = new HashSet<>();
     private Set<UUID> focused = new HashSet<>();
+    public Channel(String identifier, String name, String description)
+    {
+        this.identifier = identifier;
+        this.name = name;
+        this.description = description;
+    }
 
-    public String getIdentifier() {
+    public String getIdentifier()
+    {
         return identifier;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public Set<UUID> getViewing() {
+    public Set<UUID> getViewing()
+    {
         return viewing;
     }
 
-    public Set<UUID> getFocused() {
+    public Set<UUID> getFocused()
+    {
         return focused;
     }
 
-    public String getPermission() {
+    public String getPermission()
+    {
         return permission;
     }
 
-    public void setPermission(String permission) {
+    public void setPermission(String permission)
+    {
         this.permission = permission;
     }
 
-    public String getColor() {
+    public String getColor()
+    {
         return ChatColor.translateAlternateColorCodes('&', color);
     }
 
-    public void setColor(String color) {
+    public void setColor(String color)
+    {
         this.color = color;
     }
 
-    public String getChatColor() {
+    public String getChatColor()
+    {
         return ChatColor.translateAlternateColorCodes('&', chatColor);
     }
 
-    public void setChatColor(String chatColor) {
+    public void setChatColor(String chatColor)
+    {
         this.chatColor = chatColor;
     }
 
-    public double getCooldown() {
+    public double getCooldown()
+    {
         return cooldown;
     }
 
-    public void setCooldown(double cooldown) {
+    public void setCooldown(double cooldown)
+    {
         this.cooldown = cooldown;
     }
 
-    public double getChatRadius() {
+    public double getChatRadius()
+    {
         return chatRadius;
     }
 
-    public void setChatRadius(double chatRadius) {
+    public void setChatRadius(double chatRadius)
+    {
         this.chatRadius = chatRadius;
     }
 
-    public boolean isViewByDefault() {
+    public boolean isViewByDefault()
+    {
         return viewByDefault;
     }
 
-    public void setViewByDefault(boolean viewByDefault) {
+    public void setViewByDefault(boolean viewByDefault)
+    {
         this.viewByDefault = viewByDefault;
     }
 
-    public boolean isFocusByDefault() {
+    public boolean isFocusByDefault()
+    {
         return focusByDefault;
     }
 
-    public void setFocusByDefault(boolean focusByDefault) {
+    public void setFocusByDefault(boolean focusByDefault)
+    {
         this.focusByDefault = focusByDefault;
     }
 
-    public boolean isViewing(Player player) {
+    public boolean isViewing(Player player)
+    {
         return viewing.contains(player.getUniqueId());
     }
 
-    public boolean isFocused(Player player) {
+    public boolean isFocused(Player player)
+    {
         return focused.contains(player.getUniqueId());
     }
 
     /**
      * Forces a player to "focus" or begin talking in this channel
+     *
      * @param player The player who you would like to focus to this channel
      */
-    public void focus(Player player) {
+    public void focus(Player player)
+    {
         focus(player, true);
     }
 
     /**
      * Forces a player to "focus" or begin talking in this channel
+     *
      * @param player The player who you would like to focus to this channel
      * @param notify Whether or not to notify the player of this change
      */
-    public void focus(Player player, boolean notify) {
+    public void focus(Player player, boolean notify)
+    {
         ChatChannels.get().getChannels().forEach(channel -> {
             if (channel.getFocused().contains(player.getUniqueId()))
                 channel.getFocused().remove(player.getUniqueId());
@@ -140,29 +164,36 @@ public class Channel {
 
         focused.add(player.getUniqueId());
 
-        if (notify) {
+        if (notify)
+        {
             player.sendMessage(ChatColor.AQUA + "Set your chat focus to " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
         }
     }
 
     /**
      * Forces a player to view this channel
+     *
      * @param player The player who you would like to view this channel
      */
-    public void display(Player player) {
+    public void display(Player player)
+    {
         display(player, true);
     }
 
     /**
      * Forces a player to view this channel
+     *
      * @param player The player who you would like to view this channel
      * @param notify Whether or not to notify the player of this change
      */
-    public void display(Player player, boolean notify) {
-        if (!viewing.contains(player.getUniqueId())) {
+    public void display(Player player, boolean notify)
+    {
+        if (!viewing.contains(player.getUniqueId()))
+        {
             viewing.add(player.getUniqueId());
 
-            if (notify) {
+            if (notify)
+            {
                 player.sendMessage(ChatColor.GREEN + "You are now viewing " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
             }
         }
@@ -170,10 +201,13 @@ public class Channel {
 
     /**
      * Forces a player to hide this channel
+     *
      * @param player The player who you would like to hide this channel from
      */
-    public void hide(Player player) {
-        if (viewing.contains(player.getUniqueId())) {
+    public void hide(Player player)
+    {
+        if (viewing.contains(player.getUniqueId()))
+        {
             viewing.remove(player.getUniqueId());
 
             player.sendMessage(ChatColor.GREEN + "You are no longer viewing " + getColor() + ChatColor.BOLD + "[" + getName() + "]");
@@ -183,16 +217,19 @@ public class Channel {
     /**
      * Utility method
      * Toggles a player's view of this channel, either on or off.
+     *
      * @param player The player who's view you would like to toggle
      */
-    public void toggleView(Player player) {
+    public void toggleView(Player player)
+    {
         if (isViewing(player))
             hide(player);
         else
             display(player);
     }
 
-    public void register() {
+    public void register()
+    {
         ChatChannels.get().getChannels().add(this);
 
         System.out.println(" New chat channel registered (" + getName() + ")...");

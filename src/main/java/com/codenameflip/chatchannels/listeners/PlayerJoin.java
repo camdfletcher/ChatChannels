@@ -18,11 +18,13 @@ import java.util.stream.Stream;
 public class PlayerJoin implements Listener {
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
         Player player = event.getPlayer();
 
         // If a player has newly logged in, automatically focus to the default channel and force them to view the default channels
-        if (ChatChannels.get().getViewingChannels(player).size() == 0) {
+        if (ChatChannels.get().getViewingChannels(player).size() == 0)
+        {
             ChatChannels.get().getDefaultViewingChannels().forEach(channel ->
                     channel.display(
                             player,
@@ -31,7 +33,8 @@ public class PlayerJoin implements Listener {
             );
         }
 
-        if (ChatChannels.get().getFocusedChannel(player) == null) {
+        if (ChatChannels.get().getFocusedChannel(player) == null)
+        {
             ChatChannels.get().getDefaultChannel().focus(
                     player,
                     !(ChatChannels.get().getConfig().getBoolean("chat-settings.squelch-focus-message-on-join"))
@@ -39,13 +42,15 @@ public class PlayerJoin implements Listener {
         }
 
         // Check to see if a new update has been cached
-        if (player.hasPermission("chatchannels.update.notify")) {
+        if (player.hasPermission("chatchannels.update.notify"))
+        {
             System.out.println("[ChatChannels] Checking for plugin update...");
             Object[] update = ChatChannels.get().getUpdateHandler().getLatestUpdate();
 
             System.out.println("[ChatChannels] Update result = " + Arrays.toString(update));
 
-            if (update != null) {
+            if (update != null)
+            {
                 String newVersion = (String) update[0];
                 String newChanges = (String) update[1];
 
@@ -56,7 +61,7 @@ public class PlayerJoin implements Listener {
 
                 Stream.of(
                         TAG + ChatColor.GOLD + "a " + ChatColor.BOLD + "new update " + ChatColor.GOLD + "has been released.",
-                        TAG + ChatColor.DARK_AQUA + "New Version " + ChatColor.WHITE+ newVersion,
+                        TAG + ChatColor.DARK_AQUA + "New Version " + ChatColor.WHITE + newVersion,
                         TAG + ChatColor.DARK_AQUA + "Your Version " + ChatColor.WHITE + ChatChannels.get().getDescription().getVersion(),
                         TAG + ChatColor.DARK_AQUA + "Plugin Update(s) " + ChatColor.WHITE + newChanges
                 ).forEach(player::sendMessage);
