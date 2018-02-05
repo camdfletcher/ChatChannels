@@ -1,74 +1,113 @@
-##         CCCCCCCCCCCCChhhhhhh                                       tttt                 CCCCCCCCCCCCChhhhhhh                                                                                     lllllll
-##      CCC::::::::::::Ch:::::h                                    ttt:::t              CCC::::::::::::Ch:::::h                                                                                     l:::::l
-##    CC:::::::::::::::Ch:::::h                                    t:::::t            CC:::::::::::::::Ch:::::h                                                                                     l:::::l
-##   C:::::CCCCCCCC::::Ch:::::h                                    t:::::t           C:::::CCCCCCCC::::Ch:::::h                                                                                     l:::::l
-##  C:::::C       CCCCCC h::::h hhhhh         aaaaaaaaaaaaa  ttttttt:::::ttttttt    C:::::C       CCCCCC h::::h hhhhh         aaaaaaaaaaaaa  nnnn  nnnnnnnn    nnnn  nnnnnnnn        eeeeeeeeeeee    l::::l     ssssssssss
-## C:::::C               h::::hh:::::hhh      a::::::::::::a t:::::::::::::::::t   C:::::C               h::::hh:::::hhh      a::::::::::::a n:::nn::::::::nn  n:::nn::::::::nn    ee::::::::::::ee  l::::l   ss::::::::::s
-## C:::::C               h::::::::::::::hh    aaaaaaaaa:::::at:::::::::::::::::t   C:::::C               h::::::::::::::hh    aaaaaaaaa:::::an::::::::::::::nn n::::::::::::::nn  e::::::eeeee:::::eel::::l ss:::::::::::::s
-## C:::::C               h:::::::hhh::::::h            a::::atttttt:::::::tttttt   C:::::C               h:::::::hhh::::::h            a::::ann:::::::::::::::nnn:::::::::::::::ne::::::e     e:::::el::::l s::::::ssss:::::s
-## C:::::C               h::::::h   h::::::h    aaaaaaa:::::a      t:::::t         C:::::C               h::::::h   h::::::h    aaaaaaa:::::a  n:::::nnnn:::::n  n:::::nnnn:::::ne:::::::eeeee::::::el::::l  s:::::s  ssssss
-## C:::::C               h:::::h     h:::::h  aa::::::::::::a      t:::::t         C:::::C               h:::::h     h:::::h  aa::::::::::::a  n::::n    n::::n  n::::n    n::::ne:::::::::::::::::e l::::l    s::::::s
-## C:::::C               h:::::h     h:::::h a::::aaaa::::::a      t:::::t         C:::::C               h:::::h     h:::::h a::::aaaa::::::a  n::::n    n::::n  n::::n    n::::ne::::::eeeeeeeeeee  l::::l       s::::::s
-##  C:::::C       CCCCCC h:::::h     h:::::ha::::a    a:::::a      t:::::t    ttttttC:::::C       CCCCCC h:::::h     h:::::ha::::a    a:::::a  n::::n    n::::n  n::::n    n::::ne:::::::e           l::::l ssssss   s:::::s
-##   C:::::CCCCCCCC::::C h:::::h     h:::::ha::::a    a:::::a      t::::::tttt:::::t C:::::CCCCCCCC::::C h:::::h     h:::::ha::::a    a:::::a  n::::n    n::::n  n::::n    n::::ne::::::::e         l::::::ls:::::ssss::::::s
-##    CC:::::::::::::::C h:::::h     h:::::ha:::::aaaa::::::a      tt::::::::::::::t  CC:::::::::::::::C h:::::h     h:::::ha:::::aaaa::::::a  n::::n    n::::n  n::::n    n::::n e::::::::eeeeeeee l::::::ls::::::::::::::s
-##      CCC::::::::::::C h:::::h     h:::::h a::::::::::aa:::a       tt:::::::::::tt    CCC::::::::::::C h:::::h     h:::::h a::::::::::aa:::a n::::n    n::::n  n::::n    n::::n  ee:::::::::::::e l::::::l s:::::::::::ss
-##         CCCCCCCCCCCCC hhhhhhh     hhhhhhh  aaaaaaaaaa  aaaa         ttttttttttt         CCCCCCCCCCCCC hhhhhhh     hhhhhhh  aaaaaaaaaa  aaaa nnnnnn    nnnnnn  nnnnnn    nnnnnn    eeeeeeeeeeeeee llllllll  sssssssssss
-
-## WARNING: Edit this file with caution... All changes will be reflected in the plugin
+#      ___ _           _     ___ _                            _
+#     / __\ |__   __ _| |_  / __\ |__   __ _ _ __  _ __   ___| |___
+#    / /  | '_ \ / _` | __|/ /  | '_ \ / _` | '_ \| '_ \ / _ \ / __|
+#   / /___| | | | (_| | |_/ /___| | | | (_| | | | | | | |  __/ \__ \
+#   \____/|_| |_|\__,_|\__\____/|_| |_|\__,_|_| |_|_| |_|\___|_|___/
+#
+## WARNING: Edit this file with caution... Changes made within this file will directly correlate to how the plugin operates
 ##          If the configuration file is breaking the plugin then delete the current file and a new one will generate
 
+## Bundled Placeholders:
+## - %color%        ::  The color specified in focused channel's properties
+## - %identifier%   ::  The identifier specified in the focused channel's properties
+## - %channel%      ::  The name of the channel specified in the focused channel's properties
+## - %player%       ::  The name of the player sending the message
+## - %message%      ::  The message being sent
+## - *** PlaceholderAPI support allows you to use any custom placeholders you specify for your server ***
+
+data:
+  ## How do would you like channel loading to be handled?
+  ##
+  ## ------
+  ## If you are utilizing a custom registry to suit your needs then substitute this value for the identifier
+  ## or an alias you have specified in your registry constructor. For more information see the API documentation
+  ## ------
+  ##
+  ## By default, the bundled strategy uses the config to define classes; "config", "configuration", or "simple" are acceptable values
+  storage-strategy: "simple"
 chat-settings:
-  ## Bundled Placeholders:
-  ## - %color%        >>  The color specified in the player's focused channel configuration
-  ## - %identifier%   >>  The identifier specified in the player's focused channel configuration (Usually a single character like "T", "G", etc...)
-  ## - %channel%      >>  The channel specified in the player's focused channel configuration (Usually the name of the channel. Ex: "Global", "Announcements", "Staff Chat", etc...)
-  ## - %player%       >>  The name of the person sending the message
-  ## - %message%      >>  The message being sent when chatting
-  ## - *** PlaceholderAPI support allows you to use any custom placeholders you specify for your server ***
-  format: "&8[(COLOR)(IDENTIFIER)&8] (PLAYER)&7: (MESSAGE)"
-  ## Do you want the required permission node to be announced to the player when they attempt to chat in a certain channel and receives the "no permission" message?
+  ## * This value will be parsed for placeholders. *
+  ## * Color code supported *
+  format: "&8[%color%%identifier%&8] %player%&7: %message%"
+
+  ## Do you want the player to be able to view the permission node for channels they cannot message in?
+  ## Ex: "You need 'channel.donator.permission' to speak here!'
   announce-permissions: false
-  ## Do you want all chat messages to be output in console?
+
+  ## Do you want messages sent in chats to be logged to console?
   log-messages: true
+
   ## Do you want to turn off viewing notification message on join?
   squelch-viewing-message-on-join: true
+
   ## Do you want to turn off focus notification message on join?
   squelch-focus-message-on-join: true
 channels:
+  # ****************************
+  #   EXAMPLE CHANNEL LAYOUT
+  # ****************************
+  #
+  #  demo:
+  #    ## The name of the channel you are creating
+  #    ## This value is displayed in most plugin messages
+  #    ## If your name contains spaces users will have to replace them with '_' in their command
+  #    ## Ex: "You have hidden Demo Channel"
+  #    name: "Demo Channel"
+  #
+  #    ## The description of the channel
+  #    ## This is only shown in select places in the plugin
+  #    description: "A basic channel created for the purpose of demonstrating the plugin"
+  #
+  #    ## The short-hand code for the channel
+  #    ## Usually a single character (e.g. "A", "B", "C", "STAFF")
+  #    identifier: "D"
+  #
+  #    ## Aliases that can be used when running channel commands
+  #    ## Primarily helpful when switching channels, (e.g. "/chat focus D")
+  #    aliases:
+  #      - "D"
+  #      - "Test"
+  #
+  #    properties:
+  #      ## The color of the channel, will be applied to all references to the channel
+  #      color: "&7"
+  #
+  #      ## The color of the messages displayed in this channel
+  #      chat-color: "&f"
+  #
+  #      ## The enforced delay between messages
+  #      ## Measured in seconds
+  #      cooldown: 1.0
+  #
+  #      ## How close must a player be to the sender for them to see their messages
+  #      ## If this value is '-1' then this feature will be toggled off for this specific chat
+  #      ## If toggled on, users will not be able to see channels across different worlds
+  #      chat-radius: -1
+  #
+  #      ## The required permission level needed to chat/focus/view this channel
+  #      ## If the permission node is "*" then all users will be able to interact with the channel
+  #      permission: "*"
+  #
+  #      ## Should players automatically view this channel when they join the server?
+  #      auto-view: true
+  #
+  #      ## Should players automatically focus on this channel when they join the server?
+  #      ## Note: If this option is toggled for multiple channels then the user will be focued on whatever channel was processed last
+  #      auto-focus: false
+  #
+
   global:
     name: "Global"
-    description: "The default chat channel all players enter when joining the server"
+    description: "A generic global chat"
     identifier: "G"
-    ## Refer to [https://wiki.ess3.net/mc/] when filling this in (Ex: "WHITE", "LIGHT_PURPLE", "RED")
-    color: "&f"
-    ## The color of the ingame chat messages
-    chat-color: "&7"
-    ## Cooldown unit measured in seconds
-    cooldown: 3.0
-    ## How close do other players need to be to a person sending a message in order to view the sent message? (if this value is 0 then the radius will be infinite across the entire server)
-    chat-radius: 100.0
-    ## Asterisk in this field will allow all players to chat in this channel
-    permission: "*"
-    ## Do you want players to automatically view this chat when they join the server?
-    automatically-view: true
-    ## Do you want players to automatically be chatting in this channel when they join the server?
-    automatically-focus: true
-  announcements:
-      name: "Announcements"
-      description: "The staff announcement channel"
-      identifier: "ANNOUNCEMENTS"
-      ## Refer to [https://wiki.ess3.net/mc/] when filling this in (Ex: "&f", "&d&l", "&c")
-      color: "&c"
-      ## The color of the ingame chat messages
-      chat-color: "&c&o"
-      ## Cooldown unit measured in seconds
-      cooldown: 0.0
-      ## How close do other players need to be to a person sending a message in order to view the sent message? (if this value is 0 then the radius will be infinite across the entire server)
-      chat-radius: 0.0
-      ## Permissions can be any value that you desire!
-      permission: "example-channel-permission.speak"
-      ## Do you want players to automatically view this chat when they join the server?
-      automatically-view: true
-      ## Do you want players to automatically be chatting in this channel when they join the server?
-      automatically-focus: false
+    aliases:
+      - "G"
+      - "Global"
+    properties:
+      color: "&f"
+      chat-color: "&7"
+      cooldown: 1.0
+      chat-radius: -1
+      permission: "*"
+      auto-view: true
+      auto-focus: true

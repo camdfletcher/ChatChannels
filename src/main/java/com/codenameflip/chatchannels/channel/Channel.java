@@ -1,8 +1,6 @@
 package com.codenameflip.chatchannels.channel;
 
 import com.codenameflip.chatchannels.ChannelViewer;
-import com.codenameflip.chatchannels.utilities.Datastore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +14,7 @@ import java.util.Set;
  * @since 2/3/18
  */
 @RequiredArgsConstructor
-public abstract class IChannel implements Datastore {
+public class Channel {
 
     @Getter
     private final String identifier;
@@ -25,9 +23,13 @@ public abstract class IChannel implements Datastore {
     private final String displayName;
 
     @Getter
+    private final ChannelProperties properties;
+
+    @Getter
     private Set<ChannelViewer> focusedPlayers = new HashSet<>();
 
     @Getter
     private Set<ChannelViewer> hiddenPlayers = new HashSet<>();
+
 
 }
