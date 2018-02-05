@@ -77,6 +77,11 @@ public class Language {
         return color(finalMessage);
     }
 
+    /**
+     * Translates '&' color codes into server recognizable color formatting
+     * @param string The string you would like to have parsed
+     * @return A formatted string
+     */
     public static String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
