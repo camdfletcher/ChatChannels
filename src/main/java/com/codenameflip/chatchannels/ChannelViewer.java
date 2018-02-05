@@ -1,7 +1,7 @@
 package com.codenameflip.chatchannels;
 
+import com.codenameflip.chatchannels.channel.IChannel;
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -14,26 +14,32 @@ import java.util.Set;
  */
 public class ChannelViewer {
 
-    @Getter private final Player player;
+    @Getter
+    private final Player player;
 
     public ChannelViewer(Player player)
     {
         this.player = player;
     }
 
-    @Getter public Channel focusedChannel;
-    @Getter public Set<Channel> hiddenChannels;
+    @Getter
+    public IChannel focusedChannel;
 
-    public void focus(Channel channel) {
+    @Getter
+    public Set<IChannel> hiddenChannels;
 
+    // TODO:
+
+    public void focus(IChannel channel)
+    {
     }
 
-    public void show(Channel channel) {
-
+    public void show(IChannel channel)
+    {
     }
 
-    public void hide(Channel channel) {
-
+    public void hide(IChannel channel)
+    {
     }
 
 

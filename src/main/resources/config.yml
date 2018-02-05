@@ -19,13 +19,13 @@
 ##          If the configuration file is breaking the plugin then delete the current file and a new one will generate
 
 chat-settings:
-  ## Acceptable placeholders include:
-  ## - (COLOR) >> The color specified in the player's focused channel configuration
-  ## - (IDENTIFIER) >> The identifier specified in the player's focused channel configuration (Usually a single character like "T", "G", etc...)
-  ## - (CHANNEL) >> The channel specified in the player's focused channel configuration (Usually the name of the channel. Ex: "Global", "Announcements", "Staff Chat", etc...)
-  ## - (PLAYER) >> The name of the person sending the message
-  ## - (MESSAGE) >> The message being sent when chatting
-  ## - (Feel free to request a placeholder via Spigot PM)
+  ## Bundled Placeholders:
+  ## - %color%        >>  The color specified in the player's focused channel configuration
+  ## - %identifier%   >>  The identifier specified in the player's focused channel configuration (Usually a single character like "T", "G", etc...)
+  ## - %channel%      >>  The channel specified in the player's focused channel configuration (Usually the name of the channel. Ex: "Global", "Announcements", "Staff Chat", etc...)
+  ## - %player%       >>  The name of the person sending the message
+  ## - %message%      >>  The message being sent when chatting
+  ## - *** PlaceholderAPI support allows you to use any custom placeholders you specify for your server ***
   format: "&8[(COLOR)(IDENTIFIER)&8] (PLAYER)&7: (MESSAGE)"
   ## Do you want the required permission node to be announced to the player when they attempt to chat in a certain channel and receives the "no permission" message?
   announce-permissions: false
