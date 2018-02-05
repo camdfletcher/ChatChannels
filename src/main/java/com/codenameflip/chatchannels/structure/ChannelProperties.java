@@ -13,6 +13,10 @@ import lombok.Setter;
 @Builder
 public class ChannelProperties {
 
+    /**
+     * For documentation reference the example config channel example
+     */
+
     @Getter
     @Setter
     @Builder.Default

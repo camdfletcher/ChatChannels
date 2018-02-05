@@ -32,19 +32,39 @@ public class Language {
         TEXT.put("LOADED_CHANNEL", "&eSuccessfully loaded channel %channel%!");
 
         // Player
+        TEXT.put("CHANNEL_SHOW", "&aYou are now viewing %color%%name%");
+        TEXT.put("CHANNEL_HIDE", "&7You have hidden %color%%name%");
+        TEXT.put("CHANNEL_FOCUS", "&bYou are now focused in %color%%name%");
     }
 
+    /**
+     * Sends a message to a {@link Player} using a predefined message
+     * @param player The {@link Player} who you would like to send the message to
+     * @param message The identifier for the message you would like to send
+     * @param placeholders A map of placeholders and replacements
+     */
     public static void localeChat(Player player, String message, @Nullable HashMap<String, Object> placeholders)
     {
         player.sendMessage(parse(message, placeholders));
     }
 
+    /**
+     * Sends a message to console using a predefined message
+     * @param message The identifier for the message you would like to send
+     * @param placeholders A map of placeholders and replacements
+     */
     public static void localeConsole(String message, @Nullable HashMap<String, Object> placeholders)
     {
         Bukkit.getConsoleSender().sendMessage(parse(message, placeholders)); // using #getConsoleSender() to allow for colors
     }
 
-    public static String parse(String message, @Nullable HashMap<String, Object> placeholders)
+    /**
+     * Parses a text identifier and substitutes placeholders
+     * @param message The identifier for the message you would like to parse
+     * @param placeholders The map of placeholders that should be used to substitute
+     * @return A formatted message
+     */
+    private static String parse(String message, @Nullable HashMap<String, Object> placeholders)
     {
         if (placeholders == null) return color(message);
         if (!TEXT.containsKey(message)) throw new RuntimeException("Attempted to locale invalid message '" + message + "'");
