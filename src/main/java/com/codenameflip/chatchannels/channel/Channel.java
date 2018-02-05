@@ -1,10 +1,12 @@
 package com.codenameflip.chatchannels.channel;
 
 import com.codenameflip.chatchannels.ChannelViewer;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,6 +23,9 @@ public class Channel {
 
     @Getter
     private final String displayName;
+
+    @Getter
+    private final List<String> aliases;
 
     @Getter
     private final ChannelProperties properties;

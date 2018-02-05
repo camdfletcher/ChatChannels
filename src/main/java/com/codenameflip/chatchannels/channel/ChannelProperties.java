@@ -15,34 +15,42 @@ public class ChannelProperties {
 
     @Getter
     @Setter
+    @Builder.Default
     private String description = "A simple channel.";
 
     @Getter
     @Setter
+    @Builder.Default
     private String permission = "*";
 
     @Getter
     @Setter
+    @Builder.Default
     private String color = "§f";
 
     @Getter
     @Setter
+    @Builder.Default
     private String chatColor = "§7";
 
     @Getter
     @Setter
+    @Builder.Default
     private double cooldown = 0;
 
     @Getter
     @Setter
+    @Builder.Default
     private double chatRadius = 0;
 
     @Getter
     @Setter
+    @Builder.Default
     private boolean showByDefault = true;
 
     @Getter
     @Setter
+    @Builder.Default
     private boolean focusByDefault = true;
 
 }
