@@ -1,4 +1,4 @@
-package com.codenameflip.chatchannels.channel;
+package com.codenameflip.chatchannels.structure;
 
 import lombok.Builder;
 import lombok.Getter;

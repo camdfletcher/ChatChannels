@@ -1,7 +1,5 @@
-package com.codenameflip.chatchannels.channel;
+package com.codenameflip.chatchannels.structure;
 
-import com.codenameflip.chatchannels.ChannelViewer;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

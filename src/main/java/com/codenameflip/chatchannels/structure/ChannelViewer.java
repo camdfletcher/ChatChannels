@@ -1,6 +1,5 @@
-package com.codenameflip.chatchannels;
+package com.codenameflip.chatchannels.structure;
 
-import com.codenameflip.chatchannels.channel.Channel;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 

@@ -1,8 +1,6 @@
-package com.codenameflip.chatchannels.data;
+package com.codenameflip.chatchannels.structure;
 
 import com.codenameflip.chatchannels.ChatChannels;
-import com.codenameflip.chatchannels.channel.Channel;
-import com.codenameflip.chatchannels.channel.ChannelProperties;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
 import org.bukkit.configuration.ConfigurationSection;

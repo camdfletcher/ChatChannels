@@ -1,7 +1,7 @@
 package com.codenameflip.chatchannels;
 
-import com.codenameflip.chatchannels.data.IChannelRegistry;
-import com.codenameflip.chatchannels.data.SimpleChannelRegistry;
+import com.codenameflip.chatchannels.structure.IChannelRegistry;
+import com.codenameflip.chatchannels.structure.SimpleChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,6 +1,5 @@
-package com.codenameflip.chatchannels.data;
+package com.codenameflip.chatchannels.structure;
 
-import com.codenameflip.chatchannels.channel.Channel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +29,5 @@ public abstract class IChannelRegistry {
     abstract public Set<Channel> getChannels();
 
     abstract public Optional<Channel> getChannel(String identifier);
-
 
 }
