@@ -39,8 +39,9 @@ public class Language {
 
     /**
      * Sends a message to a {@link Player} using a predefined message
-     * @param player The {@link Player} who you would like to send the message to
-     * @param message The identifier for the message you would like to send
+     *
+     * @param player       The {@link Player} who you would like to send the message to
+     * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
     public static void localeChat(Player player, String message, @Nullable HashMap<String, Object> placeholders)
@@ -50,7 +51,8 @@ public class Language {
 
     /**
      * Sends a message to console using a predefined message
-     * @param message The identifier for the message you would like to send
+     *
+     * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
     public static void localeConsole(String message, @Nullable HashMap<String, Object> placeholders)
@@ -60,14 +62,16 @@ public class Language {
 
     /**
      * Parses a text identifier and substitutes placeholders
-     * @param message The identifier for the message you would like to parse
+     *
+     * @param message      The identifier for the message you would like to parse
      * @param placeholders The map of placeholders that should be used to substitute
      * @return A formatted message
      */
     private static String parse(String message, @Nullable HashMap<String, Object> placeholders)
     {
         if (placeholders == null) return color(message);
-        if (!TEXT.containsKey(message)) throw new RuntimeException("Attempted to locale invalid message '" + message + "'");
+        if (!TEXT.containsKey(message))
+            throw new RuntimeException("Attempted to locale invalid message '" + message + "'");
 
         String finalMessage = TEXT.get(message);
 
@@ -79,10 +83,12 @@ public class Language {
 
     /**
      * Translates '&' color codes into server recognizable color formatting
+     *
      * @param string The string you would like to have parsed
      * @return A formatted string
      */
-    public static String color(String string) {
+    public static String color(String string)
+    {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 

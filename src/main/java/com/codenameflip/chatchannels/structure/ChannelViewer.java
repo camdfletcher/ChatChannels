@@ -21,6 +21,7 @@ public class ChannelViewer {
 
     /**
      * Simple wrapper to provide access to maintenance methods
+     *
      * @param player The player of whom this object will represent
      */
     public ChannelViewer(Player player)
@@ -44,6 +45,7 @@ public class ChannelViewer {
 
     /**
      * Sets a player's {@link #focusedChannel} channel to another target channel
+     *
      * @param channel A {@link Channel} object instance
      */
     public void focus(Channel channel)
@@ -56,6 +58,7 @@ public class ChannelViewer {
     /**
      * Shows a specific {@link Channel} to a viewer
      * NOTE: This will only execute if the channel is already hidden to begin with
+     *
      * @param channel A {@link Channel} object instance
      */
     public void show(Channel channel)
@@ -69,6 +72,7 @@ public class ChannelViewer {
 
     /**
      * Hides a specific {@link Channel} from a viewer
+     *
      * @param channel A {@link Channel} object instance
      */
     public void hide(Channel channel)
@@ -82,10 +86,12 @@ public class ChannelViewer {
 
     /**
      * Utility method that generates placeholders from a {@link Channel}'s {@link ChannelProperties}
+     *
      * @param channel The {@link Channel} that formatting is being generated for
      * @return A {@link HashMap} with placeholder replacements that are used when localing the chat
      */
-    private HashMap<String, Object> getFormatting(Channel channel) {
+    private HashMap<String, Object> getFormatting(Channel channel)
+    {
         return new Placeholders()
                 .put("color", channel.getProperties().getColor())
                 .put("name", channel.getDisplayName())

@@ -24,7 +24,8 @@ public class Placeholders {
 
     /**
      * Assigns a string identifier to a replacement object
-     * @param matcher The string you would like to replace
+     *
+     * @param matcher     The string you would like to replace
      * @param replacement The object you would like to replace it with
      * @return this (builder)
      */
@@ -36,6 +37,7 @@ public class Placeholders {
 
     /**
      * Returns the map that is readable by the locale methods
+     *
      * @return A map readable by {@link Language} functions
      */
     public HashMap<String, Object> build()
