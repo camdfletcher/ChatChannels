@@ -18,9 +18,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ChatChannels extends JavaPlugin {
 
     private static final String
-            PLUGIN_RESOURCE_ID = "39100",
-            PLUGIN_RESOURCE_URL = "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels",
-            PLUGIN_VERSION_URL = "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
+            RESOURCE_ID = "39100",
+            RESOURCE_URL = "https://api.spiget.org/v2/resources/%ID%/updates?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels",
+            VERSION_URL = "https://api.spiget.org/v2/resources/%ID%/versions?size=" + Integer.MAX_VALUE + "&spiget__ua=ChatChannels";
 
     @Getter
     private static ChatChannels instance;
