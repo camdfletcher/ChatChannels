@@ -12,15 +12,13 @@ import org.bukkit.entity.Player;
  */
 public class CmdChatAdminDumpData extends ChildCommand {
 
-    public CmdChatAdminDumpData(Command parent, String... executors)
-    {
+    CmdChatAdminDumpData(Command parent, String... executors) {
         super(parent, executors);
     }
 
     @Override
-    public void execute(Player player, String... strings)
-    {
-
+    public void execute(Player player, String... strings) {
+        // TODO:
     }
 
 }

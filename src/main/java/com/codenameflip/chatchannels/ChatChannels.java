@@ -32,13 +32,12 @@ public final class ChatChannels extends JavaPlugin {
     private CommandHandler commandHandler;
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
 
         commandHandler = new CommandHandler(this)
-            .message(Language.color("&c[ChatChannels] You do not have permission to execute that command!"));
+                .message(Language.color("&c[ChatChannels] You do not have permission to execute that command!"));
         commandHandler.addCommands(new CmdChat(), new CmdChatAdmin());
 
         registry = new SimpleChannelRegistry();
@@ -48,8 +47,7 @@ public final class ChatChannels extends JavaPlugin {
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         registry.deconstruct();
 
         Language.localeConsole("DISABLED", null);

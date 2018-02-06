@@ -14,8 +14,7 @@ import org.bukkit.entity.Player;
  */
 public class CmdChat extends Command {
 
-    public CmdChat()
-    {
+    public CmdChat() {
         super(
                 ChatChannels.getInstance().getCommandHandler(),
                 "chatchannels.cmd.chat",
@@ -28,10 +27,8 @@ public class CmdChat extends Command {
     }
 
     @Override
-    public void execute(Player player, String... strings)
-    {
-        if (strings.length < 1)
-        {
+    public void execute(Player player, String... strings) {
+        if (strings.length < 1) {
             msg(player, "&6&lChatChannel Commands &r&m--&r &7&oEnter a sub-command...");
             msg(player, "&6/chat &ls&6how <channel> &8- &7Displays a channel's chat.");
             msg(player, "&6/chat &lh&6ide <channel> &8- &7Hides a channel's chat.");
@@ -46,11 +43,10 @@ public class CmdChat extends Command {
     /**
      * Utility method for easy colorized messages
      *
-     * @param player The player you would like to send a message to
+     * @param player  The player you would like to send a message to
      * @param message The message you would like to send to the player
      */
-    private void msg(Player player, String message)
-    {
+    private void msg(Player player, String message) {
         player.sendMessage(Language.color(message));
     }
 

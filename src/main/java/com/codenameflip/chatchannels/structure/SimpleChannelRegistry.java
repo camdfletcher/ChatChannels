@@ -18,21 +18,18 @@ public class SimpleChannelRegistry extends IChannelRegistry {
 
     private final HashSet<Channel> CHANNELS = new HashSet<>();
 
-    public SimpleChannelRegistry()
-    {
+    public SimpleChannelRegistry() {
         super("simple", Arrays.asList("config", "configuration"));
     }
 
     @Override
-    public void construct()
-    {
+    public void construct() {
         Language.localeConsole("CONSTRUCT_REGISTRY", new Placeholders().put("registry", getIdentifier()).build());
 
         FileConfiguration config = ChatChannels.getInstance().getConfig();
         ConfigurationSection section = config.getConfigurationSection("channels");
 
-        for (String key : section.getKeys(false))
-        {
+        for (String key : section.getKeys(false)) {
             String name = str(section, key, "name");
             String identifier = str(section, key, "identifier");
             List<String> aliases = section.getStringList(key + ".aliases");
@@ -56,21 +53,18 @@ public class SimpleChannelRegistry extends IChannelRegistry {
     }
 
     @Override
-    public void deconstruct()
-    {
+    public void deconstruct() {
         Language.localeConsole("DECONSTRUCT_REGISTRY", null);
         CHANNELS.clear();
     }
 
     @Override
-    public Set<Channel> getChannels()
-    {
+    public Set<Channel> getChannels() {
         return CHANNELS;
     }
 
     @Override
-    public Optional<Channel> getChannel(String identifier)
-    {
+    public Optional<Channel> getChannel(String identifier) {
         return CHANNELS.stream()
                 .filter(channel -> channel.getIdentifier().equalsIgnoreCase(identifier))
                 .findAny();
@@ -80,19 +74,16 @@ public class SimpleChannelRegistry extends IChannelRegistry {
         Utility methods for configuration retrieval
      */
 
-    private String str(ConfigurationSection section, String key, String path)
-    {
+    private String str(ConfigurationSection section, String key, String path) {
         return section.getString(key + "." + path);
     }
 
-    private double dbl(ConfigurationSection section, String key, String path)
-    {
+    private double dbl(ConfigurationSection section, String key, String path) {
         return section.getDouble(key + "." + path);
     }
 
-    private boolean bol(ConfigurationSection section, String key, String path)
-    {
+    private boolean bol(ConfigurationSection section, String key, String path) {
         return section.getBoolean(key + "." + path);
     }
-    
+
 }

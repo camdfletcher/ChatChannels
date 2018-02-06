@@ -16,25 +16,31 @@ import java.util.Map;
  */
 public class Language {
 
-    private Language()
-    {
+    private Language() {
     }
 
     private static final HashMap<String, String> TEXT = new HashMap<>();
 
-    static
-    {
-        // Console
+    static {
+        // Console Output
         TEXT.put("ENABLED", "&bChatChannels has been successfully enabled!");
         TEXT.put("DISABLED", "&cChatChannels has been successfully disabled!");
         TEXT.put("CONSTRUCT_REGISTRY", "&aRegistry construction started... Using '%registry%'...");
         TEXT.put("DECONSTRUCT_REGISTRY", "&cRegistry deconstruction started... Goodbye...");
         TEXT.put("LOADED_CHANNEL", "&eSuccessfully loaded channel %channel%!");
 
-        // Player
+        // Player Commands
         TEXT.put("CHANNEL_SHOW", "&aYou are now viewing %color%%name%");
         TEXT.put("CHANNEL_HIDE", "&7You have hidden %color%%name%");
         TEXT.put("CHANNEL_FOCUS", "&bYou are now focused in %color%%name%");
+
+        // Moderation
+        TEXT.put("CHAT_CLEARED", "    &d&l*** CHANNEL CLEARED BY &e&l%executor% &c&l***");
+        TEXT.put("CHAT_MUTED", "    &c&l* CHANNEL MUTED BY &e&l%executor% &c&l*");
+        TEXT.put("CHAT_UNMUTED", "    &a&l* CHANNEL UNMUTED BY &e&l%executor% &a&l*");
+
+        // Generic
+        TEXT.put("INVALID_PARAM", "&c[ChatChannels] Invalid value for parameter '%param%'");
     }
 
     /**
@@ -44,8 +50,7 @@ public class Language {
      * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
-    public static void localeChat(Player player, String message, @Nullable HashMap<String, Object> placeholders)
-    {
+    public static void localeChat(Player player, String message, @Nullable HashMap<String, Object> placeholders) {
         player.sendMessage(parse(message, placeholders));
     }
 
@@ -55,8 +60,7 @@ public class Language {
      * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
-    public static void localeConsole(String message, @Nullable HashMap<String, Object> placeholders)
-    {
+    public static void localeConsole(String message, @Nullable HashMap<String, Object> placeholders) {
         Bukkit.getConsoleSender().sendMessage(parse(message, placeholders)); // using #getConsoleSender() to allow for colors
     }
 
@@ -67,8 +71,7 @@ public class Language {
      * @param placeholders The map of placeholders that should be used to substitute
      * @return A formatted message
      */
-    private static String parse(String message, @Nullable HashMap<String, Object> placeholders)
-    {
+    private static String parse(String message, @Nullable HashMap<String, Object> placeholders) {
         if (placeholders == null) return color(message);
         if (!TEXT.containsKey(message))
             throw new RuntimeException("Attempted to locale invalid message '" + message + "'");
@@ -87,8 +90,7 @@ public class Language {
      * @param string The string you would like to have parsed
      * @return A formatted string
      */
-    public static String color(String string)
-    {
+    public static String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 

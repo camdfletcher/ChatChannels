@@ -1,7 +1,5 @@
 package com.codenameflip.chatchannels.utils;
 
-import lombok.Builder;
-
 import java.util.HashMap;
 
 /**
@@ -18,8 +16,11 @@ public class Placeholders {
 
     private static final HashMap<String, Object> VALUES = new HashMap<>();
 
-    public Placeholders()
-    {
+    public Placeholders() {
+    }
+
+    public Placeholders(String key, Object value) { // For simple one-value placeholders
+        VALUES.put(key, value);
     }
 
     /**
@@ -29,8 +30,7 @@ public class Placeholders {
      * @param replacement The object you would like to replace it with
      * @return this (builder)
      */
-    public Placeholders put(String matcher, Object replacement)
-    {
+    public Placeholders put(String matcher, Object replacement) {
         VALUES.put(matcher, replacement);
         return this;
     }
@@ -40,8 +40,7 @@ public class Placeholders {
      *
      * @return A map readable by {@link Language} functions
      */
-    public HashMap<String, Object> build()
-    {
+    public HashMap<String, Object> build() {
         return VALUES;
     }
 

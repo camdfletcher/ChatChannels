@@ -1,8 +1,14 @@
 package com.codenameflip.chatchannels.commands.chat;
 
+import com.codenameflip.chatchannels.ChatChannels;
+import com.codenameflip.chatchannels.structure.Channel;
+import com.codenameflip.chatchannels.utils.Language;
+import com.codenameflip.chatchannels.utils.Placeholders;
 import com.simplexitymc.command.api.ChildCommand;
 import com.simplexitymc.command.api.Command;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 /**
  * ChatChannels
@@ -12,15 +18,19 @@ import org.bukkit.entity.Player;
  */
 public class CmdChatHide extends ChildCommand {
 
-    public CmdChatHide(Command parent, String... executors)
-    {
+    CmdChatHide(Command parent, String... executors) {
         super(parent, executors);
     }
 
     @Override
-    public void execute(Player player, String... strings)
-    {
+    public void execute(Player player, String... strings) {
+        if (strings.length < 1) player.chat("/chat");
+        else {
+            Optional<Channel> targetChannel = ChatChannels.getInstance().getRegistry().getChannel(strings[0]);
 
+            if (!targetChannel.isPresent()) Language.localeChat(player, "INVALID_PARAM", new Placeholders("param", "channel").build());
+            else ChatChannels.getInstance().getRegistry().hideChannel(player, targetChannel.get());
+        }
     }
 
 }

@@ -1,12 +1,12 @@
 package com.codenameflip.chatchannels.structure;
 
+import com.codenameflip.chatchannels.utils.Language;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * ChatChannels
@@ -48,10 +48,40 @@ public class Channel {
     private Set<UUID> focusedPlayers = new HashSet<>();
 
     /**
-     * A list of viewers who currently have the channel hidden
+     * A list of viewers who currently have the channel shown
      */
     @Getter
-    private Set<UUID> hiddenPlayers = new HashSet<>();
+    private Set<UUID> viewingPlayers = new HashSet<>();
 
+    /**
+     * Utility method used to make it easy to locale entire channels
+     *
+     * @param message The language message identifier you wish to send
+     * @param placeholders The placeholders that will be used when localing the chat
+     */
+    public void broadcast(String message, HashMap<String, Object> placeholders) {
+        viewingPlayers.forEach(uuid -> {
+            Player target = Bukkit.getPlayer(uuid);
+
+            if (target == null) return; // Skip!
+
+            Language.localeChat(target, message, placeholders);
+        });
+    }
+
+    /**
+     * Utility method to send raw bukkit messages to all players in a channel
+     *
+     * @param message The message you wish to send
+     */
+    public void broadcastRaw(String message) {
+        viewingPlayers.forEach(uuid -> {
+            Player target = Bukkit.getPlayer(uuid);
+
+            if (target == null) return; // Skip!
+
+            target.sendMessage(Language.color(message));
+        });
+    }
 
 }

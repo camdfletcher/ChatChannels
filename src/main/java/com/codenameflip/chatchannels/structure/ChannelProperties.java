@@ -57,4 +57,9 @@ public class ChannelProperties {
     @Builder.Default
     private boolean focusByDefault = true;
 
+    @Getter
+    @Setter
+    @Builder.Default
+    private boolean muted = false;
+
 }

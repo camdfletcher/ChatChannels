@@ -62,35 +62,31 @@ public abstract class IChannelRegistry {
     /**
      * Wrapper function, see below.
      */
-    public void focusChannel(Player player, Channel channel)
-    {
+    public void focusChannel(Player player, Channel channel) {
         focusChannel(player.getUniqueId(), channel);
     }
 
     /**
      * Wrapper function, see below.
      */
-    public void showChannel(Player player, Channel channel)
-    {
+    public void showChannel(Player player, Channel channel) {
         showChannel(player.getUniqueId(), channel);
     }
 
     /**
      * Wrapper function, see below.
      */
-    public void hideChannel(Player player, Channel channel)
-    {
+    public void hideChannel(Player player, Channel channel) {
         hideChannel(player.getUniqueId(), channel);
     }
 
     /**
      * Focuses a player's chat into a specified {@link Channel}
      *
-     * @param uuid The {@link UUID} of the target player
+     * @param uuid    The {@link UUID} of the target player
      * @param channel The {@link Channel} you would like to have the player focused on
      */
-    public void focusChannel(UUID uuid, Channel channel)
-    {
+    public void focusChannel(UUID uuid, Channel channel) {
         if (channel.getFocusedPlayers().contains(uuid)) return; // Already focused
 
         channel.getFocusedPlayers().add(uuid);
@@ -100,28 +96,26 @@ public abstract class IChannelRegistry {
     /**
      * Displays a specific channel to a player
      *
-     * @param uuid The {@link UUID} of the target player
+     * @param uuid    The {@link UUID} of the target player
      * @param channel The {@link Channel} you would like shown
      */
-    public void showChannel(UUID uuid, Channel channel)
-    {
-        if (!channel.getHiddenPlayers().contains(uuid)) return; // Already shown
+    public void showChannel(UUID uuid, Channel channel) {
+        if (channel.getViewingPlayers().contains(uuid)) return; // Already shown
 
-        channel.getHiddenPlayers().remove(uuid);
+        channel.getViewingPlayers().add(uuid);
         attemptLocale(uuid, "CHANNEL_SHOW", getFormatting(channel));
     }
 
     /**
      * Hides a specific channel from a player
      *
-     * @param uuid The {@link UUID} of the target player
+     * @param uuid    The {@link UUID} of the target player
      * @param channel The {@link Channel} you would like hidden
      */
-    public void hideChannel(UUID uuid, Channel channel)
-    {
-        if (channel.getHiddenPlayers().contains(uuid)) return; // Already hidden
+    public void hideChannel(UUID uuid, Channel channel) {
+        if (!channel.getViewingPlayers().contains(uuid)) return; // Already hidden
 
-        channel.getHiddenPlayers().add(uuid);
+        channel.getViewingPlayers().remove(uuid);
         attemptLocale(uuid, "CHANNEL_HIDE", getFormatting(channel));
     }
 
@@ -131,8 +125,7 @@ public abstract class IChannelRegistry {
      * @param channel The {@link Channel} that formatting is being generated for
      * @return A {@link HashMap} with placeholder replacements that are used when localing the chat
      */
-    private HashMap<String, Object> getFormatting(Channel channel)
-    {
+    private HashMap<String, Object> getFormatting(Channel channel) {
         return new Placeholders()
                 .put("color", channel.getProperties().getColor())
                 .put("name", channel.getDisplayName())
@@ -141,15 +134,14 @@ public abstract class IChannelRegistry {
 
     /**
      * Safely handles localing with {@link UUID}
-     *
+     * <p>
      * WARNING: This method will abort if the player cannot be found.
      *
-     * @param uuid The {@link UUID} you're trying to message
-     * @param message The message identifier you're trying to send
+     * @param uuid       The {@link UUID} you're trying to message
+     * @param message    The message identifier you're trying to send
      * @param formatting The placeholder options that will be used when localing the message
      */
-    private void attemptLocale(UUID uuid, String message, HashMap<String, Object> formatting)
-    {
+    private void attemptLocale(UUID uuid, String message, HashMap<String, Object> formatting) {
         Player target = Bukkit.getPlayer(uuid);
 
         if (target == null) return; // Unable to locale the chat, abort.
