@@ -65,6 +65,10 @@
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -98,6 +102,13 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.0.8</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Command API (for easy command handling) -->
+        <dependency>
+            <groupId>com.github.outdatedversion</groupId>
+            <artifactId>command-handler</artifactId>
+            <version>2.4.4</version>
         </dependency>
 
     </dependencies>

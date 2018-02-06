@@ -1,8 +1,11 @@
 package com.codenameflip.chatchannels;
 
+import com.codenameflip.chatchannels.commands.chat.CmdChat;
+import com.codenameflip.chatchannels.commands.chat_admin.CmdChatAdmin;
 import com.codenameflip.chatchannels.structure.IChannelRegistry;
 import com.codenameflip.chatchannels.structure.SimpleChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
+import com.simplexitymc.command.api.CommandHandler;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,11 +28,18 @@ public final class ChatChannels extends JavaPlugin {
     @Getter
     private IChannelRegistry registry;
 
+    @Getter
+    private CommandHandler commandHandler;
+
     @Override
     public void onEnable()
     {
         instance = this;
         this.saveDefaultConfig();
+
+        commandHandler = new CommandHandler(this)
+            .message(Language.color("&c[ChatChannels] You do not have permission to execute that command!"));
+        commandHandler.addCommands(new CmdChat(), new CmdChatAdmin());
 
         registry = new SimpleChannelRegistry();
         registry.construct();
