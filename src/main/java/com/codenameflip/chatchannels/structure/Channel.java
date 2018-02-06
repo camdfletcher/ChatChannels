@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * ChatChannels
@@ -44,13 +45,13 @@ public class Channel {
      * A list of viewers currently focused/chatting in the channel
      */
     @Getter
-    private Set<ChannelViewer> focusedPlayers = new HashSet<>();
+    private Set<UUID> focusedPlayers = new HashSet<>();
 
     /**
      * A list of viewers who currently have the channel hidden
      */
     @Getter
-    private Set<ChannelViewer> hiddenPlayers = new HashSet<>();
+    private Set<UUID> hiddenPlayers = new HashSet<>();
 
 
 }

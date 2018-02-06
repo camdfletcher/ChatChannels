@@ -94,5 +94,5 @@ public class SimpleChannelRegistry extends IChannelRegistry {
     {
         return section.getBoolean(key + "." + path);
     }
-
+    
 }
