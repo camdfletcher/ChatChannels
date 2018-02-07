@@ -2,12 +2,16 @@ package com.codenameflip.chatchannels;
 
 import com.codenameflip.chatchannels.commands.chat.CmdChat;
 import com.codenameflip.chatchannels.commands.chat_admin.CmdChatAdmin;
+import com.codenameflip.chatchannels.listeners.ChatListener;
 import com.codenameflip.chatchannels.structure.IChannelRegistry;
 import com.codenameflip.chatchannels.structure.SimpleChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
 import com.simplexitymc.command.api.CommandHandler;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 /**
  * ChatChannels
@@ -40,8 +44,12 @@ public final class ChatChannels extends JavaPlugin {
                 .message(Language.color("&c[ChatChannels] You do not have permission to execute that command!"));
         commandHandler.addCommands(new CmdChat(), new CmdChatAdmin());
 
-        registry = new SimpleChannelRegistry();
-        registry.construct();
+        if (Arrays.asList("simple", "config", "configuration").contains(getConfig().getString("data.storage-strategy"))) {
+            registry = new SimpleChannelRegistry();
+            registry.construct();
+        }
+
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 
         Language.localeConsole("ENABLED", null);
     }

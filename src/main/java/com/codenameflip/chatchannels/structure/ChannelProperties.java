@@ -40,7 +40,7 @@ public class ChannelProperties {
     @Getter
     @Setter
     @Builder.Default
-    private double cooldown = 0;
+    private double cooldown = -1;
 
     @Getter
     @Setter

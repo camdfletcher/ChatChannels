@@ -22,13 +22,13 @@ public abstract class IChannelRegistry {
      * The registry identifier, used for internal identification and also in the configuration file
      */
     @Getter
-    public final String identifier;
+    private final String identifier;
 
     /**
      * The registry aliases, also used for internal identification and in the configuration file
      */
     @Getter
-    public final List<String> aliases;
+    private final List<String> aliases;
 
     /**
      * The equivalent of "onEnable" for the registry
@@ -58,6 +58,14 @@ public abstract class IChannelRegistry {
      * @return {@link Optional<Channel>}, if present then a channel could be found, otherwise it couldn't
      */
     abstract public Optional<Channel> getChannel(String identifier);
+
+    /**
+     * Retrieves an {@link Optional<Channel>} object that represents the player's focused channel
+     *
+     * @param uuid The unique id on the player you'd like to get the channel for
+     * @return {@link Optional<Channel>}, if present then a channel could be found, otherwise it couldn't
+     */
+    abstract public Optional<Channel> getFocusedChannel(UUID uuid);
 
     /**
      * Wrapper function, see below.

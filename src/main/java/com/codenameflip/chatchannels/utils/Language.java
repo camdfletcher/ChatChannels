@@ -38,9 +38,14 @@ public class Language {
         TEXT.put("CHAT_CLEARED", "    &d&l*** CHANNEL CLEARED BY &e&l%executor% &c&l***");
         TEXT.put("CHAT_MUTED", "    &c&l* CHANNEL MUTED BY &e&l%executor% &c&l*");
         TEXT.put("CHAT_UNMUTED", "    &a&l* CHANNEL UNMUTED BY &e&l%executor% &a&l*");
+        TEXT.put("CANNOT_CHAT", "&cThe channel you're chatting is has been muted by a staff member. You cannot chat.");
 
         // Generic
         TEXT.put("INVALID_PARAM", "&c[ChatChannels] Invalid value for parameter '%param%'");
+        TEXT.put("NO_PERMS", "&cYou do not have permission to speak in this channel!");
+        TEXT.put("NO_PERMS_EXACT", "&3You're lacking the permission node: &f%permission%");
+        TEXT.put("NOT_VIEWING", "&cYou weren't viewing the focused channel! Visibility has been toggled.");
+        TEXT.put("ON_COOLDOWN", "&cYou're currently on cooldown and cannot chat in this channel!");
     }
 
     /**

@@ -70,6 +70,13 @@ public class SimpleChannelRegistry extends IChannelRegistry {
                 .findAny();
     }
 
+    @Override
+    public Optional<Channel> getFocusedChannel(UUID uuid) {
+        return CHANNELS.stream().
+                filter(channel -> channel.getFocusedPlayers().contains(uuid))
+                .findAny();
+    }
+
     /*
         Utility methods for configuration retrieval
      */

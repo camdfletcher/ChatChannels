@@ -8,7 +8,8 @@
 ##          If the configuration file is breaking the plugin then delete the current file and a new one will generate
 
 ## Bundled Placeholders:
-## - %color%        ::  The color specified in focused channel's properties
+## - %color%        ::  The color specified in focused channel's properties  (The channel color)
+## - %chatcolor%    ::  The color specified in focused channel's properties  (The color on the chat)
 ## - %identifier%   ::  The identifier specified in the focused channel's properties
 ## - %channel%      ::  The name of the channel specified in the focused channel's properties
 ## - %player%       ::  The name of the player sending the message
@@ -28,7 +29,7 @@ data:
 chat-settings:
   ## * This value will be parsed for placeholders. *
   ## * Color code supported *
-  format: "&8[%color%%identifier%&8] %player%&7: %message%"
+  format: "&8[%color%%identifier%&8] %player%&7: %chatcolor%%message%"
 
   ## Do you want the player to be able to view the permission node for channels they cannot message in?
   ## Ex: "You need 'channel.donator.permission' to speak here!'
