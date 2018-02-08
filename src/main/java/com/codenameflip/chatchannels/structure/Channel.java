@@ -56,7 +56,7 @@ public class Channel {
     /**
      * Utility method used to make it easy to locale entire channels
      *
-     * @param message The language message identifier you wish to send
+     * @param message      The language message identifier you wish to send
      * @param placeholders The placeholders that will be used when localing the chat
      */
     public void broadcast(String message, HashMap<String, Object> placeholders) {

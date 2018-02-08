@@ -85,7 +85,7 @@ public abstract class IChannelRegistry {
     /**
      * Handles replacing placeholders and constructing the format for the chat message
      *
-     * @param sender The {@link Player} who has sent the message
+     * @param sender  The {@link Player} who has sent the message
      * @param message The message being sent
      * @param channel The {@link Channel} the message is being sent to
      * @return A formatted {@link String}
@@ -203,7 +203,7 @@ public abstract class IChannelRegistry {
     /**
      * Safely handles permission checking when trying to perform channel operations on users
      *
-     * @param uuid The {@link UUID} you'd like to validate permissions for
+     * @param uuid    The {@link UUID} you'd like to validate permissions for
      * @param channel The {@link Channel} you'd like to use as a comparison for permissions
      * @return Whether the method should continue running due to permissions passing
      */

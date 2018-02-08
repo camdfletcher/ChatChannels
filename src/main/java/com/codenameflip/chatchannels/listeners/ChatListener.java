@@ -28,9 +28,10 @@ public class ChatListener implements ChatChannelsListener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        if (message.startsWith("/"))  return;
+        if (message.startsWith("/")) return;
 
-        if (getRegistry() == null) return; // If chat channels couldn't successfully make a registry instance then handle chat vanilla.
+        if (getRegistry() == null)
+            return; // If chat channels couldn't successfully make a registry instance then handle chat vanilla.
         else event.setCancelled(true);
 
         Optional<Channel> c = getRegistry().getFocusedChannel(player.getUniqueId());
