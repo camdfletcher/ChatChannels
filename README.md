@@ -16,15 +16,13 @@ For most servers, this solution can be quite helpful in organizing various serve
 ## Commands/Permissions
 Channel configurations allow for custom permissions, selected at your discretion, additionally the plugin uses a few permissions for commands.
 
-_(Aliases for all commands are indicated by the **bold** highlighting in the command usage, ex: "f", "s", "h", additionally, this list will be updated accordingly as new commands are introduced)_
-
 ![Chat Commands](http://image.prntscr.com/image/6897b3cefb194a94a3142b39938f4267.png)
 ![Chat Admin Commands](http://image.prntscr.com/image/76c006594986493ca93c2a39aa87273c.png)
 
 |       **Permission**       |                                            **Action**                                            |                                          **Nested Commands**                                          | **Who should this be applied to?** |
 |:--------------------------:|:------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:----------------------------------:|
 | chatchannels.cmd.chat      | The root command for all /chat commands                                                          | `/chat focus <channel>` `/chat show <channel>` `/chat hide <channel>`                                 | Players                            |
-| chatchannels.cmd.chatadmin | The root command for all /chatAdmin commands                                                     | `/chatAdmin mute <channel>` `/chatAdmin clear <channel>` `/chatAdmin channelDump` `/chatAdmin reload` | Administrators                     |
+| chatchannels.cmd.chatadmin | The root command for all /chatAdmin commands                                                     | `/chatAdmin mute <channel>` `/chatAdmin clear <channel>` `/chatAdmin reload` | Administrators                     |
 | chatchannels.bypass-mute   | Allows a player to bypass a channel mute and continue to send messages                           | N/A                                                                                                   | Administrators                     |
 | chatchannels.update-notify | Sends a message to a player when they join alerting them of a new plugin version (if applicable) | N/A                                                                                                   | Administrators                     |
 
