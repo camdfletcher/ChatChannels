@@ -3,8 +3,11 @@ package com.codenameflip.chatchannels.structure;
 import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -17,6 +20,8 @@ import java.util.*;
 public class SimpleChannelRegistry extends IChannelRegistry {
 
     private final HashSet<Channel> CHANNELS = new HashSet<>();
+    private final HashSet<Channel> DEFAULT_SHOW = new HashSet<>();
+    private final HashSet<Channel> DEFAULT_FOCUS = new HashSet<>();
 
     public SimpleChannelRegistry() {
         super("simple", Arrays.asList("config", "configuration"));
@@ -48,7 +53,10 @@ public class SimpleChannelRegistry extends IChannelRegistry {
             Channel channel = new Channel(identifier, name, aliases, properties);
             CHANNELS.add(channel);
 
-            Language.localeConsole("LOADED_CHANNEL", new Placeholders().put("channel", channel.getIdentifier()).build());
+            if (properties.isShowByDefault()) DEFAULT_SHOW.add(channel);
+            if (properties.isFocusByDefault()) DEFAULT_FOCUS.add(channel);
+
+            Language.localeConsole("LOADED_CHANNEL", new Placeholders("channel", name).build());
         }
     }
 
@@ -56,6 +64,8 @@ public class SimpleChannelRegistry extends IChannelRegistry {
     public void deconstruct() {
         Language.localeConsole("DECONSTRUCT_REGISTRY", null);
         CHANNELS.clear();
+        DEFAULT_FOCUS.clear();
+        DEFAULT_SHOW.clear();
     }
 
     @Override
@@ -64,9 +74,19 @@ public class SimpleChannelRegistry extends IChannelRegistry {
     }
 
     @Override
+    public Set<Channel> getAutoShowChannels() {
+        return DEFAULT_SHOW;
+    }
+
+    @Override
+    public Set<Channel> getAutoFocusChannels() {
+        return DEFAULT_FOCUS;
+    }
+
+    @Override
     public Optional<Channel> getChannel(String identifier) {
         return CHANNELS.stream()
-                .filter(channel -> channel.getIdentifier().equalsIgnoreCase(identifier))
+                .filter(channel -> channel.getIdentifier().equalsIgnoreCase(identifier) || containsEqualsIgnoreCase(channel.getAliases(), identifier))
                 .findAny();
     }
 
@@ -74,7 +94,33 @@ public class SimpleChannelRegistry extends IChannelRegistry {
     public Optional<Channel> getFocusedChannel(UUID uuid) {
         return CHANNELS.stream().
                 filter(channel -> channel.getFocusedPlayers().contains(uuid))
-                .findAny();
+                .findFirst();
+    }
+
+    @Override
+    public String formatMessage(Player sender, String message, Channel channel) {
+        // Bundled Placeholders:
+        // - %color%        ::  The color specified in focused channel's properties  (The channel color)
+        // - %chatcolor%    ::  The color specified in focused channel's properties  (The color on the chat)
+        // - %identifier%   ::  The identifier specified in the focused channel's properties
+        // - %channel%      ::  The name on the channel specified in the focused channel's properties
+        // - %player%       ::  The name on the player sending the message
+        // - %message%      ::  The message being sent
+
+        String format = ChatChannels.getInstance().getConfig().getString("chat-settings.format");
+        ChannelProperties properties = channel.getProperties();
+
+        format = format.replaceAll("%color%", properties.getColor());
+        format = format.replaceAll("%chatcolor%", properties.getChatColor());
+        format = format.replaceAll("%identifier%", channel.getIdentifier());
+        format = format.replaceAll("%channel%", channel.getDisplayName());
+        format = format.replaceAll("%player%", sender.getName());
+        format = format.replaceAll("%message%", message);
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
+            format = PlaceholderAPI.setPlaceholders(sender, format);
+
+        return Language.color(format); // Just in-case.
     }
 
     /*
@@ -91,6 +137,14 @@ public class SimpleChannelRegistry extends IChannelRegistry {
 
     private boolean bol(ConfigurationSection section, String key, String path) {
         return section.getBoolean(key + "." + path);
+    }
+
+    private boolean containsEqualsIgnoreCase(List<String> array, String target) {
+        for (String s : array) {
+            if (s.equalsIgnoreCase(target)) return true;
+        }
+
+        return false;
     }
 
 }

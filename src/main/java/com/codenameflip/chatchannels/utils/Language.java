@@ -1,6 +1,5 @@
 package com.codenameflip.chatchannels.utils;
 
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,21 +29,24 @@ public class Language {
         TEXT.put("LOADED_CHANNEL", "&eSuccessfully loaded channel %channel%!");
 
         // Player Commands
-        TEXT.put("CHANNEL_SHOW", "&aYou are now viewing %color%%name%");
-        TEXT.put("CHANNEL_HIDE", "&7You have hidden %color%%name%");
-        TEXT.put("CHANNEL_FOCUS", "&bYou are now focused in %color%%name%");
+        TEXT.put("CHANNEL_SHOW", "&6&l[Chat] &aYou are now viewing the %color%&l%name% &achannel.");
+        TEXT.put("CHANNEL_HIDE", "&6&l[Chat] &eYou have hidden the %color%&l%name% &7channel.");
+        TEXT.put("CHANNEL_FOCUS", "&6&l[Chat] &bYou are now focused on the %color%&l%name% &bchannel.");
 
         // Moderation
-        TEXT.put("CHAT_CLEARED", "    &d&l*** CHANNEL CLEARED BY &e&l%executor% &c&l***");
+        TEXT.put("CHAT_CLEARED", "    &d&l*** CHANNEL CLEARED BY &e&l%executor% &d&l***");
         TEXT.put("CHAT_MUTED", "    &c&l* CHANNEL MUTED BY &e&l%executor% &c&l*");
         TEXT.put("CHAT_UNMUTED", "    &a&l* CHANNEL UNMUTED BY &e&l%executor% &a&l*");
-        TEXT.put("CANNOT_CHAT", "&cThe channel you're chatting is has been muted by a staff member. You cannot chat.");
+        TEXT.put("CANNOT_CHAT", "&6&l[Chat] &cChatting in this channel has been temporarily prohibited by staff.");
+        TEXT.put("PLUGIN_RELOADED", "&6&l[ChatChannels] &aPlugin reloaded!");
 
         // Generic
-        TEXT.put("INVALID_PARAM", "&c[ChatChannels] Invalid value for parameter '%param%'");
-        TEXT.put("NO_PERMS", "&cYou do not have permission to speak in this channel!");
+        TEXT.put("INVALID_PARAM", "&cInvalid value for parameter '%param%'");
+        TEXT.put("INVALID_OPERATION", "&6&l[Chat] &c&o%reason%");
+        TEXT.put("INVALID_USAGE", "&cInvalid command usage.");
+        TEXT.put("NO_PERMS", "&6&l[Chat] &cYou do not have permission to interact with this channel!");
         TEXT.put("NO_PERMS_EXACT", "&3You're lacking the permission node: &f%permission%");
-        TEXT.put("NOT_VIEWING", "&cYou weren't viewing the focused channel! Visibility has been toggled.");
+        TEXT.put("NOT_VIEWING", "&cYou weren't viewing the focused channel! Toggling...");
         TEXT.put("ON_COOLDOWN", "&cYou're currently on cooldown and cannot chat in this channel!");
     }
 
@@ -55,7 +57,7 @@ public class Language {
      * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
-    public static void localeChat(Player player, String message, @Nullable HashMap<String, Object> placeholders) {
+    public static void localeChat(Player player, String message, HashMap<String, Object> placeholders) {
         player.sendMessage(parse(message, placeholders));
     }
 
@@ -65,7 +67,7 @@ public class Language {
      * @param message      The identifier for the message you would like to send
      * @param placeholders A map of placeholders and replacements
      */
-    public static void localeConsole(String message, @Nullable HashMap<String, Object> placeholders) {
+    public static void localeConsole(String message, HashMap<String, Object> placeholders) {
         Bukkit.getConsoleSender().sendMessage(parse(message, placeholders)); // using #getConsoleSender() to allow for colors
     }
 
@@ -76,10 +78,11 @@ public class Language {
      * @param placeholders The map of placeholders that should be used to substitute
      * @return A formatted message
      */
-    private static String parse(String message, @Nullable HashMap<String, Object> placeholders) {
-        if (placeholders == null) return color(message);
+    private static String parse(String message, HashMap<String, Object> placeholders) {
         if (!TEXT.containsKey(message))
             throw new RuntimeException("Attempted to locale invalid message '" + message + "'");
+
+        if (placeholders == null) return color(TEXT.get(message));
 
         String finalMessage = TEXT.get(message);
 

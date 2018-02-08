@@ -1,12 +1,12 @@
 package com.codenameflip.chatchannels;
 
-import com.codenameflip.chatchannels.commands.chat.CmdChat;
-import com.codenameflip.chatchannels.commands.chat_admin.CmdChatAdmin;
+import com.codenameflip.chatchannels.commands.CmdChat;
+import com.codenameflip.chatchannels.commands.CmdChatAdmin;
 import com.codenameflip.chatchannels.listeners.ChatListener;
+import com.codenameflip.chatchannels.listeners.JoinListener;
 import com.codenameflip.chatchannels.structure.IChannelRegistry;
 import com.codenameflip.chatchannels.structure.SimpleChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
-import com.simplexitymc.command.api.CommandHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,24 +32,30 @@ public final class ChatChannels extends JavaPlugin {
     @Getter
     private IChannelRegistry registry;
 
-    @Getter
-    private CommandHandler commandHandler;
-
     @Override
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
 
-        commandHandler = new CommandHandler(this)
-                .message(Language.color("&c[ChatChannels] You do not have permission to execute that command!"));
-        commandHandler.addCommands(new CmdChat(), new CmdChatAdmin());
+        // Commands
+        getCommand("chat").setExecutor(new CmdChat());
+        getCommand("chatAdmin").setExecutor(new CmdChatAdmin());
 
+        // Registration/Backend Setup
         if (Arrays.asList("simple", "config", "configuration").contains(getConfig().getString("data.storage-strategy"))) {
             registry = new SimpleChannelRegistry();
             registry.construct();
         }
 
+        // Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
+
+        // Final Touches
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            registry.getAutoShowChannels().forEach(all -> registry.showChannel(player, all));
+            registry.getAutoFocusChannels().forEach(all -> registry.focusChannel(player, all));
+        });
 
         Language.localeConsole("ENABLED", null);
     }

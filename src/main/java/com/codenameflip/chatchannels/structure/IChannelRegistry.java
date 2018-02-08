@@ -1,5 +1,6 @@
 package com.codenameflip.chatchannels.structure;
 
+import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
 import lombok.Getter;
@@ -47,9 +48,23 @@ public abstract class IChannelRegistry {
     /**
      * A {@link Set} of {@link Channel} that have been registered during registry construction
      *
-     * @return
+     * @return {@link Set}
      */
     abstract public Set<Channel> getChannels();
+
+    /**
+     * A {@link Set} of {@link Channel} that should be automatically shown when a player joins
+     *
+     * @return {@link Set}
+     */
+    abstract public Set<Channel> getAutoShowChannels();
+
+    /**
+     * A {@link Set} of {@link Channel} that should be automatically focused when a player joins
+     *
+     * @return {@link Set}
+     */
+    abstract public Set<Channel> getAutoFocusChannels();
 
     /**
      * Retrieves an {@link Optional<Channel>} using a string identifier
@@ -66,6 +81,16 @@ public abstract class IChannelRegistry {
      * @return {@link Optional<Channel>}, if present then a channel could be found, otherwise it couldn't
      */
     abstract public Optional<Channel> getFocusedChannel(UUID uuid);
+
+    /**
+     * Handles replacing placeholders and constructing the format for the chat message
+     *
+     * @param sender The {@link Player} who has sent the message
+     * @param message The message being sent
+     * @param channel The {@link Channel} the message is being sent to
+     * @return A formatted {@link String}
+     */
+    abstract public String formatMessage(Player sender, String message, Channel channel);
 
     /**
      * Wrapper function, see below.
@@ -95,7 +120,15 @@ public abstract class IChannelRegistry {
      * @param channel The {@link Channel} you would like to have the player focused on
      */
     public void focusChannel(UUID uuid, Channel channel) {
-        if (channel.getFocusedPlayers().contains(uuid)) return; // Already focused
+        if (channel.getFocusedPlayers().contains(uuid)) {
+            attemptLocale(uuid, "INVALID_OPERATION", new Placeholders("reason", "You're already focused on this channel.").build());
+            return; // Already focused
+        }
+
+        if (!validatePermissions(uuid, channel)) return;
+
+        // Unfocus them from ALL over channels
+        getChannels().forEach(all -> all.getFocusedPlayers().remove(uuid));
 
         channel.getFocusedPlayers().add(uuid);
         attemptLocale(uuid, "CHANNEL_FOCUS", getFormatting(channel));
@@ -108,7 +141,12 @@ public abstract class IChannelRegistry {
      * @param channel The {@link Channel} you would like shown
      */
     public void showChannel(UUID uuid, Channel channel) {
-        if (channel.getViewingPlayers().contains(uuid)) return; // Already shown
+        if (channel.getViewingPlayers().contains(uuid)) {
+            attemptLocale(uuid, "INVALID_OPERATION", new Placeholders("reason", "You're already viewing this channel.").build());
+            return; // Already shown
+        }
+
+        if (!validatePermissions(uuid, channel)) return;
 
         channel.getViewingPlayers().add(uuid);
         attemptLocale(uuid, "CHANNEL_SHOW", getFormatting(channel));
@@ -121,7 +159,12 @@ public abstract class IChannelRegistry {
      * @param channel The {@link Channel} you would like hidden
      */
     public void hideChannel(UUID uuid, Channel channel) {
-        if (!channel.getViewingPlayers().contains(uuid)) return; // Already hidden
+        if (!channel.getViewingPlayers().contains(uuid)) {
+            attemptLocale(uuid, "INVALID_OPERATION", new Placeholders("reason", "You've already hidden this channel.").build());
+            return; // Already hidden
+        }
+
+        if (!validatePermissions(uuid, channel)) return;
 
         channel.getViewingPlayers().remove(uuid);
         attemptLocale(uuid, "CHANNEL_HIDE", getFormatting(channel));
@@ -155,6 +198,33 @@ public abstract class IChannelRegistry {
         if (target == null) return; // Unable to locale the chat, abort.
 
         Language.localeChat(target, message, formatting);
+    }
+
+    /**
+     * Safely handles permission checking when trying to perform channel operations on users
+     *
+     * @param uuid The {@link UUID} you'd like to validate permissions for
+     * @param channel The {@link Channel} you'd like to use as a comparison for permissions
+     * @return Whether the method should continue running due to permissions passing
+     */
+    private boolean validatePermissions(UUID uuid, Channel channel) {
+        Player target = Bukkit.getPlayer(uuid);
+
+        if (target == null) {
+            return false;
+        }
+
+        if (!channel.getProperties().getPermission().equalsIgnoreCase("*")
+                && !target.hasPermission(channel.getProperties().getPermission())) {
+            Language.localeChat(target, "NO_PERMS", null);
+
+            if (ChatChannels.getInstance().getConfig().getBoolean("chat-settings.announce-permissions"))
+                Language.localeChat(target, "NO_PERMS_EXACT", new Placeholders("permission", channel.getProperties().getPermission()).build());
+
+            return false;
+        }
+
+        return true;
     }
 
 }
