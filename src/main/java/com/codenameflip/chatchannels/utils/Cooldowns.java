@@ -55,13 +55,16 @@ public class Cooldowns {
     }
 
     public static boolean isDone(UUID uuid, String cooldownReason) {
-        boolean done = get(uuid, cooldownReason)
-                .map(cooldowns -> cooldowns.getExpirationTime() <= System.currentTimeMillis())
-                .orElse(true); // Assume completion
+        boolean done = true;
+        Optional<Cooldowns> optionalCooldown = get(uuid, cooldownReason);
+
+        if (optionalCooldown.isPresent() && optionalCooldown.get().getExpirationTime() >= System.currentTimeMillis())
+            done = false;
 
         if (done) {
             new ArrayList<>(CooldownsManager.getTrackedCooldowns()).stream() // Avoid Concurrent Modification Exceptions
                     .filter(cooldown -> cooldown.getUuid().equals(uuid))
+                    .filter(cooldowns -> cooldowns.getReason().equalsIgnoreCase(cooldownReason))
                     .forEach(CooldownsManager.getTrackedCooldowns()::remove);
         }
 
