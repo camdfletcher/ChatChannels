@@ -110,12 +110,14 @@ public class SimpleChannelRegistry extends IChannelRegistry {
         String format = ChatChannels.getInstance().getConfig().getString("chat-settings.format");
         ChannelProperties properties = channel.getProperties();
 
-        format = format.replaceAll("%color%", properties.getColor());
-        format = format.replaceAll("%chatcolor%", properties.getChatColor());
-        format = format.replaceAll("%identifier%", channel.getIdentifier());
-        format = format.replaceAll("%channel%", channel.getDisplayName());
-        format = format.replaceAll("%player%", sender.getName());
-        format = format.replaceAll("%message%", message);
+        Placeholders placeholders = new Placeholders();
+        placeholders.put("%color%", properties.getColor())
+                    .put("%chatcolor%", properties.getChatColor())
+                    .put("%identifier%", channel.getIdentifier())
+                    .put("%player%", sender.getDisplayName())
+                    .put("%message%", message);
+
+        format = placeholders.attemptMatch(format);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
             format = PlaceholderAPI.setPlaceholders(sender, format);

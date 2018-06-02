@@ -1,6 +1,7 @@
 package com.codenameflip.chatchannels.utils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ChatChannels
@@ -42,6 +43,21 @@ public class Placeholders {
      */
     public HashMap<String, Object> build() {
         return VALUES;
+    }
+
+    /**
+     * Attempts to resolve all placeholders in a passed string
+     *
+     * @param base The string you'd like to convert placeholders for
+     * @return The newly generated string
+     */
+    public String attemptMatch(String base) {
+        String newString = base;
+
+        for (Map.Entry<String, Object> placeholder : build().entrySet())
+            newString = newString.replaceAll(placeholder.getKey(), placeholder.getValue().toString());
+
+        return newString;
     }
 
 }
