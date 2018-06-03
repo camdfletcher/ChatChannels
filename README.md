@@ -156,5 +156,6 @@ public void onChannelChat(ChannelChatEvent event) {
 - [ ] Channel spam protection
 - [ ] Permission-based chat cooldowns
 - [ ] Highlighted names in chat (if you are mentioned in chat your name would be highlighted a different color)
+- [ ] Some form of chat "module" that developers could write as chat extensions/preprocessors
 
 - **Feel free to create an issue for a feature suggestion**
