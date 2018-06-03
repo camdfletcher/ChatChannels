@@ -1,10 +1,10 @@
 package com.codenameflip.chatchannels.listeners;
 
-import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.events.ChannelChatEvent;
 import com.codenameflip.chatchannels.events.ChannelPreChatEvent;
 import com.codenameflip.chatchannels.structure.Channel;
-import com.codenameflip.chatchannels.utils.Cooldowns;
+import com.codenameflip.chatchannels.utils.cooldowns.Cooldowns;
+import com.codenameflip.chatchannels.utils.cooldowns.CooldownsManager;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
 import org.bukkit.Bukkit;
@@ -74,10 +74,10 @@ public class ChatListener implements ChatChannelsListener {
 
         // Make sure the event isn't being hijacked and cancelled elsewhere
         if (!preChatEvent.isCancelled()) {
-            String cooldownId = "COOLDOWN_" + channel.getIdentifier();
+            String cooldownId = "COOLDOWN_" + channel.getDisplayName();
 
             if (!Cooldowns.isDone(player, cooldownId)) {
-                Language.localeChat(player, "ON_COOLDOWN", null);
+                Language.localeChat(player, "ON_COOLDOWN", new Placeholders("remaining", CooldownsManager.getTimeRemaining(player.getUniqueId(), cooldownId)).build());
                 return;
             }
 
@@ -86,12 +86,12 @@ public class ChatListener implements ChatChannelsListener {
             ChannelChatEvent chatEvent = new ChannelChatEvent(player, channel, message);
             Bukkit.getPluginManager().callEvent(chatEvent);
 
-            channel.broadcastRaw(ChatChannels.getInstance().getRegistry().formatMessage(player, message, channel));
+            channel.broadcastRaw(getRegistry().formatMessage(player, message, channel));
 
-            if (channel.getProperties().getCooldown() > 0) {
+            if (channel.getProperties().getCooldown() > 0 && !player.hasPermission("chatchannels.bypass-cooldown")) {
                 Cooldowns.on(player)
                         .forTime(TimeUnit.SECONDS.toMillis((long) channel.getProperties().getCooldown()))
-                        .forReason("COOLDOWN_" + channel.getIdentifier())
+                        .forReason(cooldownId)
                         .done();
             }
         }

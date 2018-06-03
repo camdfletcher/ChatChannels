@@ -99,25 +99,16 @@ public class SimpleChannelRegistry extends IChannelRegistry {
 
     @Override
     public String formatMessage(Player sender, String message, Channel channel) {
-        // Bundled Placeholders:
-        // - %color%        ::  The color specified in focused channel's properties  (The channel color)
-        // - %chatcolor%    ::  The color specified in focused channel's properties  (The color on the chat)
-        // - %identifier%   ::  The identifier specified in the focused channel's properties
-        // - %channel%      ::  The name on the channel specified in the focused channel's properties
-        // - %player%       ::  The name on the player sending the message
-        // - %message%      ::  The message being sent
-
         String format = ChatChannels.getInstance().getConfig().getString("chat-settings.format");
         ChannelProperties properties = channel.getProperties();
 
-        Placeholders placeholders = new Placeholders();
-        placeholders.put("%color%", properties.getColor())
-                    .put("%chatcolor%", properties.getChatColor())
-                    .put("%identifier%", channel.getIdentifier())
-                    .put("%player%", sender.getDisplayName())
-                    .put("%message%", message);
-
-        format = placeholders.attemptMatch(format);
+        // Bundled placeholders
+        format = format.replaceAll("%color%", properties.getColor());
+        format = format.replaceAll("%chatcolor%", properties.getChatColor());
+        format = format.replaceAll("%identifier%", channel.getIdentifier());
+        format = format.replaceAll("%channel%", channel.getDisplayName());
+        format = format.replaceAll("%player%", sender.getDisplayName());
+        format = format.replaceAll("%message%", message);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
             format = PlaceholderAPI.setPlaceholders(sender, format);

@@ -1,11 +1,10 @@
-package com.codenameflip.chatchannels.utils;
+package com.codenameflip.chatchannels.utils.cooldowns;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -81,7 +80,7 @@ public class Cooldowns {
     }
 
     public Cooldowns forTime(long duration) {
-        this.expirationTime = duration;
+        this.expirationTime = System.currentTimeMillis() + duration;
         return this;
     }
 
@@ -91,10 +90,3 @@ public class Cooldowns {
 
 }
 
-final class CooldownsManager {
-    private CooldownsManager() {
-    }
-
-    @Getter
-    private static List<Cooldowns> trackedCooldowns = new ArrayList<>();
-}

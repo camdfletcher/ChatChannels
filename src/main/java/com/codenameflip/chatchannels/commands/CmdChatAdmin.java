@@ -1,12 +1,10 @@
 package com.codenameflip.chatchannels.commands;
 
-import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.structure.Channel;
-import com.codenameflip.chatchannels.structure.IChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,13 +16,18 @@ import java.util.Optional;
  * @author Cameron Fletcher
  * @since 2/5/18
  */
-public class CmdChatAdmin implements CommandExecutor {
+public class CmdChatAdmin implements ChatChannelsCommand {
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
 
         Player player = (Player) sender;
+
+        if (!player.hasPermission("chatchannels.cmd.chatadmin")) {
+            Language.localeChat(player, "INVALID_OPERATION", new Placeholders("reason", "You do not have permission to execute this command!").build());
+            return true;
+        }
 
         if (args.length == 0) {
             msg(player, "&c&lChatChannel Admin Commands &r&m--&r &7&oEnter a sub-command...");
@@ -35,7 +38,7 @@ public class CmdChatAdmin implements CommandExecutor {
             return true;
         } else {
             if (args.length == 2) {
-                Optional<Channel> targetChannel = ChatChannels.getInstance().getRegistry().getChannel(args[1]);
+                Optional<Channel> targetChannel = getRegistry().getChannel(args[1]);
                 Channel channel = targetChannel.get();
 
                 if (!targetChannel.isPresent()) {
@@ -50,22 +53,20 @@ public class CmdChatAdmin implements CommandExecutor {
                     if (muted) channel.broadcast("CHAT_MUTED", new Placeholders("executor", player.getName()).build());
                     else channel.broadcast("CHAT_UNMUTED", new Placeholders("executor", player.getName()).build());
                 } else if (args[0].equalsIgnoreCase("clear")) {
-                    for (int i = 0; i < 200; i++) channel.broadcastRaw(" ");
+                    for (int i = 0; i < 5000; i++) channel.broadcastRaw(" ");
                     channel.broadcast("CHAT_CLEARED", new Placeholders("executor", player.getName()).build());
                 } else Language.localeChat(player, "INVALID_USAGE", null);
             }
 
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
-                    IChannelRegistry registry = ChatChannels.getInstance().getRegistry();
-
-                    ChatChannels.getInstance().reloadConfig();
-                    registry.deconstruct();
-                    registry.construct();
+                    get().reloadConfig();
+                    getRegistry().deconstruct();
+                    getRegistry().construct();
 
                     Bukkit.getOnlinePlayers().forEach(online -> {
-                        registry.getAutoShowChannels().forEach(all -> registry.showChannel(online, all));
-                        registry.getAutoFocusChannels().forEach(all -> registry.focusChannel(online, all));
+                        getRegistry().getAutoShowChannels().forEach(all -> getRegistry().showChannel(online, all));
+                        getRegistry().getAutoFocusChannels().forEach(all -> getRegistry().focusChannel(online, all));
                     });
 
                     Language.localeChat(player, "PLUGIN_RELOADED", null);

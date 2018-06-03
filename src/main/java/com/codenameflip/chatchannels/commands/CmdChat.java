@@ -1,11 +1,9 @@
 package com.codenameflip.chatchannels.commands;
 
 
-import com.codenameflip.chatchannels.ChatChannels;
 import com.codenameflip.chatchannels.structure.Channel;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,7 +15,7 @@ import java.util.Optional;
  * @author Cameron Fletcher
  * @since 2/5/18
  */
-public class CmdChat implements CommandExecutor {
+public class CmdChat implements ChatChannelsCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
@@ -31,17 +29,33 @@ public class CmdChat implements CommandExecutor {
             msg(player, " &6/chat &lh&6ide <channel> &8- &7Hides a channel's chat.");
             msg(player, " &6/chat &lf&6ocus <channel> &8- &7Sets your channel focus.");
         } else if (args.length >= 2) {
-            Optional<Channel> targetChannel = ChatChannels.getInstance().getRegistry().getChannel(args[1]);
+            Optional<Channel> targetChannel = getRegistry().getChannel(args[1]);
 
             if (!targetChannel.isPresent()) {
                 Language.localeChat(player, "INVALID_PARAM", new Placeholders("param", "channel").build());
                 return true;
             }
 
-            if (args[0].equalsIgnoreCase("show")) ChatChannels.getInstance().getRegistry().showChannel(player, targetChannel.get());
-            else if (args[0].equalsIgnoreCase("hide")) ChatChannels.getInstance().getRegistry().hideChannel(player, targetChannel.get());
-            else if (args[0].equalsIgnoreCase("focus")) ChatChannels.getInstance().getRegistry().focusChannel(player, targetChannel.get());
-            else Language.localeChat(player, "INVALID_USAGE", null);
+            switch (args[0].toLowerCase()) {
+                case "show":
+                case "s":
+                case "view":
+                    getRegistry().showChannel(player, targetChannel.get());
+                    break;
+                case "hide":
+                case "h":
+                case "goaway":
+                    getRegistry().hideChannel(player, targetChannel.get());
+                    break;
+                case "focus":
+                case "f":
+                case "talk":
+                    getRegistry().focusChannel(player, targetChannel.get());
+                    break;
+                default:
+                    Language.localeChat(player, "INVALID_USAGE", null);
+                    break;
+            }
         } else Language.localeChat(player, "INVALID_USAGE", null);
 
         return true;

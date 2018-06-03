@@ -30,7 +30,7 @@ public class Language {
 
         // Player Commands
         TEXT.put("CHANNEL_SHOW", "&6&l[Chat] &aYou are now viewing the %color%&l%name% &achannel.");
-        TEXT.put("CHANNEL_HIDE", "&6&l[Chat] &eYou have hidden the %color%&l%name% &7channel.");
+        TEXT.put("CHANNEL_HIDE", "&6&l[Chat] &7You have hidden the %color%&l%name% &7channel.");
         TEXT.put("CHANNEL_FOCUS", "&6&l[Chat] &bYou are now focused on the %color%&l%name% &bchannel.");
 
         // Moderation
@@ -47,7 +47,7 @@ public class Language {
         TEXT.put("NO_PERMS", "&6&l[Chat] &cYou do not have permission to interact with this channel!");
         TEXT.put("NO_PERMS_EXACT", "&3You're lacking the permission node: &f%permission%");
         TEXT.put("NOT_VIEWING", "&cYou weren't viewing the focused channel! Toggling...");
-        TEXT.put("ON_COOLDOWN", "&cYou're currently on cooldown and cannot chat in this channel!");
+        TEXT.put("ON_COOLDOWN", "&cYou're on chat cooldown for &e%remaining%ms");
     }
 
     /**
