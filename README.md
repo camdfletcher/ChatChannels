@@ -24,7 +24,8 @@ Channel configurations allow for custom permissions, selected at your discretion
 | chatchannels.cmd.chat      | The root command for all /chat commands                                                          | `/chat focus <channel>` `/chat show <channel>` `/chat hide <channel>`                                 | Players                            |
 | chatchannels.cmd.chatadmin | The root command for all /chatAdmin commands                                                     | `/chatAdmin mute <channel>` `/chatAdmin clear <channel>` `/chatAdmin reload` | Administrators                     |
 | chatchannels.bypass-mute   | Allows a player to bypass a channel mute and continue to send messages                           | N/A                                                                                                   | Administrators                     |
-| chatchannels.update-notify | Sends a message to a player when they join alerting them of a new plugin version (if applicable) | N/A                                                                                                   | Administrators                     |
+| chatchannels.update-notify | Sends a message to a player when they join alerting them of a new plugin version (if applicable) | N/A                                                                                                   | Administrators                   
+| chatchannels.bypass-cooldown | Allows a player to bypass all channel cool downs | N/A                                                                                                   | Staff                     |
 
 ## Configuration
 The plugin's `config.yml` outlines exactly what is required to setup a channel (assuming you're using the default data strategy)
