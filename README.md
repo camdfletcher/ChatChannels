@@ -107,14 +107,23 @@ If you would like to intercept a player chatting in a certain channel, there's a
 ```
 
 ## Potential Feature List
-- ~~Auto update notifier~~  
+- [X] Auto update notifier
+
   ![autoupdate screenshot](https://i.imgur.com/YVde6Ts.png)
-- Per world channels
-- ~~Chat channel radius~~  
+  
+- [ ] Per world channels
+
+- [X] Chat channel radius
+
   ![chat radius screenshot](https://i.imgur.com/3Es96bZ.png)  
   ![chat radius screenshot 2](http://image.prntscr.com/image/85c973df436146b8b8d951833ea3ebe6.png)
-- WorldGuard channel integration
-- Channel spam protection
-- Permission-based chat cooldowns
-- Highlighted names in chat (if you are mentioned in chat your name would be highlighted a different color)
+
+- [ ] WorldGuard channel integration
+
+- [ ] Channel spam protection
+
+- [ ] Permission-based chat cooldowns
+
+- [ ] Highlighted names in chat (if you are mentioned in chat your name would be highlighted a different color)
+
 - **Feel free to create an issue for a feature suggestion**
