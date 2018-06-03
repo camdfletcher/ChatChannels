@@ -37,12 +37,6 @@ chat-settings:
 
   ## Do you want messages sent in chats to be logged to console?
   log-messages: true
-
-  ## Do you want to turn off viewing notification message on join?
-  squelch-viewing-message-on-join: true
-
-  ## Do you want to turn off focus notification message on join?
-  squelch-focus-message-on-join: true
 channels:
   # ****************************
   #   EXAMPLE CHANNEL LAYOUT
