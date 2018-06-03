@@ -31,8 +31,7 @@ public class ChatListener implements ChatChannelsListener {
 
         if (message.startsWith("/")) return;
 
-        if (getRegistry() == null)
-            return; // If chat channels couldn't successfully make a registry instance then handle chat vanilla.
+        if (getRegistry() == null) return; // If chat channels couldn't successfully make a registry instance then handle chat vanilla.
         else event.setCancelled(true);
 
         Optional<Channel> c = getRegistry().getFocusedChannel(player.getUniqueId());
@@ -43,7 +42,7 @@ public class ChatListener implements ChatChannelsListener {
         }
 
         c = getRegistry().getFocusedChannel(player.getUniqueId()); // Update the channel, just in case it was null before and is now set.
-        Channel channel = c.get(); // Unbox the optional of ease of use
+        Channel channel = c.get(); // Unbox
 
         // Handle mute management
         if (channel.getProperties().isMuted()) {
