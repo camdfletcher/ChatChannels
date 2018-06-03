@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class CooldownsManager {
     private CooldownsManager() {
@@ -20,6 +21,6 @@ public class CooldownsManager {
                 .filter(cooldowns -> cooldowns.getReason().equalsIgnoreCase(reason))
                 .findAny();
 
-        return cooldown.map(cooldowns -> cooldowns.getExpirationTime() - System.currentTimeMillis()).orElse(-1L);
+        return cooldown.map(cooldowns -> TimeUnit.MILLISECONDS.toSeconds(cooldowns.getExpirationTime() - System.currentTimeMillis())).orElse(-1L);
     }
 }

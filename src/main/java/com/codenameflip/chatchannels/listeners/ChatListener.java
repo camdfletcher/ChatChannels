@@ -8,6 +8,7 @@ import com.codenameflip.chatchannels.utils.cooldowns.CooldownsManager;
 import com.codenameflip.chatchannels.utils.Language;
 import com.codenameflip.chatchannels.utils.Placeholders;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -74,6 +75,7 @@ public class ChatListener implements ChatChannelsListener {
 
         // Make sure the event isn't being hijacked and cancelled elsewhere
         if (!preChatEvent.isCancelled()) {
+            String formattedMessage = getRegistry().formatMessage(player, message, channel);
             String cooldownId = "COOLDOWN_" + channel.getDisplayName();
 
             if (!Cooldowns.isDone(player, cooldownId)) {
@@ -81,13 +83,33 @@ public class ChatListener implements ChatChannelsListener {
                 return;
             }
 
-            // TODO: Radius management
-
             ChannelChatEvent chatEvent = new ChannelChatEvent(player, channel, message);
             Bukkit.getPluginManager().callEvent(chatEvent);
 
-            channel.broadcastRaw(getRegistry().formatMessage(player, message, channel));
+            // Radius management
+            if (channel.getProperties().getChatRadius() > 0) {
+                String warningId = "COOLDOWN_WARN_RADIUS_" + channel.getDisplayName();
+                double radius = channel.getProperties().getChatRadius();
 
+                player.sendMessage(formattedMessage); // Make sure the player themselves can see the message they sent.
+
+                player.getNearbyEntities(radius, radius, radius).stream()
+                        .filter(ent -> ent.getType() == EntityType.PLAYER)
+                        .filter(p -> channel.getViewingPlayers().contains(p.getUniqueId()))
+                        .forEach(p -> p.sendMessage(formattedMessage));
+
+                // Radius warning
+                if (Cooldowns.isDone(player, warningId)) {
+                    Cooldowns.on(player)
+                            .forTime(TimeUnit.MINUTES.toMillis(5))
+                            .forReason(warningId)
+                            .done();
+
+                    Language.localeChat(player, "WARN_RADIUS", new Placeholders().put("channel", channel.getDisplayName()).put("radius", radius).build());
+                }
+            } else channel.broadcastRaw(formattedMessage);
+
+            // Chat cooldown management
             if (channel.getProperties().getCooldown() > 0 && !player.hasPermission("chatchannels.bypass-cooldown")) {
                 Cooldowns.on(player)
                         .forTime(TimeUnit.SECONDS.toMillis((long) channel.getProperties().getCooldown()))
