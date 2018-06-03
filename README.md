@@ -96,14 +96,50 @@ Additionally you may access the project's javadocs [here]()
 
 ### Creating a channel
 ```java
-// TODO: Update this with the finalized code structure
+ChannelProperties properties = ChannelProperties.builder()
+                    .description("My cool channel")
+                    .color("&b")
+                    .chatColor("&f")
+                    .cooldown(10.0)
+                    .chatRadius(100.0)
+                    .permission("cool.permission.needed")
+                    .showByDefault(true)
+                    .focusByDefault(false)
+                    .build();
+
+Channel channel = new Channel("CC", "CoolChannel", Arrays.asList("CC", "CoolChannel"), properties);
+
+// Now that your channel object is created, be sure to insert it into your registry so that ChatChannels recognizes it!
+```
+
+### ChannelPreChatEvent
+If you would like to hijack/cancel a player chatting in a channel, use the event below...
+
+```java
+@EventHandler
+public void onChannelPreChat(ChannelPreChatEvent event) {
+    Player sender = event.getPlayer();
+    Channel channel = event.getChannel();
+    String message = event.getMessage();
+    
+    event.setCancelled(true);
+    
+    // ...
+}
 ```
 
 ### ChannelChatEvent
 If you would like to intercept a player chatting in a certain channel, there's an event for that!
 
 ```java
-// TODO: Update this with the finalized code structure
+@EventHandler
+public void onChannelChat(ChannelChatEvent event) {
+    Player sender = event.getPlayer();
+    Channel channel = event.getChannel();
+    String message = event.getMessage();
+    
+    // ...
+}
 ```
 
 ## Potential Feature List
