@@ -7,11 +7,13 @@ import com.codenameflip.chatchannels.listeners.JoinListener;
 import com.codenameflip.chatchannels.structure.IChannelRegistry;
 import com.codenameflip.chatchannels.structure.SimpleChannelRegistry;
 import com.codenameflip.chatchannels.utils.Language;
+import com.codenameflip.chatchannels.utils.updater.UpdateWatcher;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * ChatChannels
@@ -32,6 +34,9 @@ public final class ChatChannels extends JavaPlugin {
     @Getter
     private IChannelRegistry registry;
 
+    @Getter
+    private UpdateWatcher updateWatcher;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -48,14 +53,19 @@ public final class ChatChannels extends JavaPlugin {
         }
 
         // Listeners
-        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
-        Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
+        Stream.of(
+                new ChatListener(),
+                new JoinListener()
+        ).forEach(e -> Bukkit.getPluginManager().registerEvents(e, this));
 
         // Final Touches
         Bukkit.getOnlinePlayers().forEach(player -> {
             registry.getAutoShowChannels().forEach(all -> registry.showChannel(player, all));
             registry.getAutoFocusChannels().forEach(all -> registry.focusChannel(player, all));
         });
+
+        // Initialize the updater
+        updateWatcher = new UpdateWatcher("39100", "ChatChannels");
 
         Language.localeConsole("ENABLED", null);
     }

@@ -48,7 +48,8 @@ public class Language {
         TEXT.put("NO_PERMS_EXACT", "&3You're lacking the permission node: &f%permission%");
         TEXT.put("NOT_VIEWING", "&cYou weren't viewing the focused channel! Toggling...");
         TEXT.put("ON_COOLDOWN", "&cYou're on chat cooldown for &e%remaining%s");
-        TEXT.put("WARN_RADIUS", "&7\n&cYou're chatting in a radius-based channel (&e%channel%&c)\n&7Your messages will only be sent to users within &f%radius% blocks\n&7");
+        TEXT.put("WARN_RADIUS", "&7\n&cYou're chatting in a radius-based channel (&e%channel%&c)\n&7Your messages will only be sent to users within &f%radius% blocks\n&7 ");
+        TEXT.put("UPDATE_NOTIFICATION", "&7\n&c&l(!) WARNING: &cOutdated build of ChatChannels detected.\n  &7New Version: &f%version%\n  &7Update: &f%update%\n&7 \n  &e&l** &eIt is highly recommended that you update! &e&l**\n&7 ");
     }
 
     /**
