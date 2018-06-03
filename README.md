@@ -16,8 +16,8 @@ For most servers, this solution can be quite helpful in organizing various serve
 ## Commands/Permissions
 Channel configurations allow for custom permissions, selected at your discretion, additionally the plugin uses a few permissions for commands.
 
-![Chat Commands](http://image.prntscr.com/image/6897b3cefb194a94a3142b39938f4267.png)
-![Chat Admin Commands](http://image.prntscr.com/image/76c006594986493ca93c2a39aa87273c.png)
+![Chat Commands](https://i.imgur.com/8am7f86.png)
+![Chat Admin Commands](https://i.imgur.com/gQ7ql7Q.png)
 
 |       **Permission**       |                                            **Action**                                            |                                          **Nested Commands**                                          | **Who should this be applied to?** |
 |:--------------------------:|:------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:----------------------------------:|
@@ -108,10 +108,10 @@ If you would like to intercept a player chatting in a certain channel, there's a
 
 ## Potential Feature List
 - ~~Auto update notifier~~  
-  ![autoupdate screenshot](http://image.prntscr.com/image/440252d9f7c24751aca638bed4459ca5.png)
+  ![autoupdate screenshot](https://i.imgur.com/YVde6Ts.png)
 - Per world channels
 - ~~Chat channel radius~~  
-  ![chat radius screenshot](http://image.prntscr.com/image/acd11e5bf88842c1a7ee0fc0d0c9f693.png)  
+  ![chat radius screenshot](https://i.imgur.com/3Es96bZ.png)  
   ![chat radius screenshot 2](http://image.prntscr.com/image/85c973df436146b8b8d951833ea3ebe6.png)
 - WorldGuard channel integration
 - Channel spam protection
