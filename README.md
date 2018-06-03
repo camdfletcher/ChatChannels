@@ -1,6 +1,6 @@
 # :speech_balloon: ChatChannels
 ### A clean and efficient way to organize your server chat
-![Header image](http://image.prntscr.com/image/21438b93033c412b9547644d2089a3c3.png)
+![Header image](https://i.imgur.com/RhEZ5Ri.png)
 
 ### Motivation
 Chats tend to get pretty messy, especially on servers with large quantities of players. ChatChannels provides an easy mechanism to sort all conversations into various channels which players can easily view or hide at their own discretion.
