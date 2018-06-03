@@ -6,3 +6,4 @@
 # Maven
 target/
 */target/
+dependency-reduced-pom.xml
