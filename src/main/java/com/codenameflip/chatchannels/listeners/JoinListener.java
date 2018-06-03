@@ -24,7 +24,7 @@ public class JoinListener implements ChatChannelsListener {
             getRegistry().getAutoFocusChannels().forEach(all -> getRegistry().focusChannel(player, all));
         }
 
-        if (player.hasPermission("chatchannels.notify-update") && get().getUpdateWatcher().getLatestUpdate().isPresent()) {
+        if (player.hasPermission("chatchannels.update-notify") && get().getUpdateWatcher().getLatestUpdate().isPresent()) {
             TrackedUpdate update = get().getUpdateWatcher().getLatestUpdate().get();
 
             Language.localeChat(player, "UPDATE_NOTIFICATION",
